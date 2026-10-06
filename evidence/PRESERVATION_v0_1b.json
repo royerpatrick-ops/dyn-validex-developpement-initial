@@ -1,0 +1,13 @@
+{
+  "base": "v0.1a",
+  "base_archive_sha256": "06ca194b881a12fe229c84ea37803c372eac21b39e33798e96adc3a60d865ec7",
+  "raw_files": 19,
+  "scientific_files_compared": 61,
+  "changed": [],
+  "display_equations_identical": 18,
+  "new_hull_generator": false,
+  "new_scientific_reanalysis": false,
+  "P2": "NOT_RUN",
+  "external_publication": false,
+  "comparison": "Byte-for-byte hashes of existing files and exact Markdown display expressions."
+}

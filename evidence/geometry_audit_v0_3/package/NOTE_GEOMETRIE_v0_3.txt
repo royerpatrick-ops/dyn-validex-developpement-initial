@@ -1,0 +1,139 @@
+DYN-VALIDEX — CORRECTIVE GÉOMÉTRIQUE v0.3
+Portée, justification des décisions et critères de l'audit indépendant.
+
+1. DÉFAUT TRAITÉ
+
+La v0.2 perdait des points exactement frontières du disque à certains angles.
+Le patch fixant A=C=1/R² corrigeait R=1000 mais échouait encore sur 25 rayons
+parmi 2..250. Le mécanisme est l'utilisation d'un arrondi comme décision
+d'exclusion : (1/31²)*31*31 peut être supérieur à 1 en float64.
+
+Il faut corriger à la fois la génération des colonnes et le prédicat final.
+Une tolérance constante ne convient pas : elle pourrait accepter des points
+strictement extérieurs. La v0.3 remplace ces deux étapes et la construction
+topologique de l'enveloppe. Les versions précédentes sont conservées.
+
+2. DISQUE : CALCUL ENTIER EXACT
+
+Chaque paramètre rationnel R,u,v est représenté exactement. Choisir le multiple
+commun D des dénominateurs ; écrire r=DR, U=Du et V=Dv, tous entiers.
+Pour l'indice entier de colonne kx, les points admissibles satisfont
+
+  (D*kx−U)² + (D*ky−V)² ≤ r².
+
+Les colonnes possibles vont de ceil(u−R) à floor(u+R), avec division rationnelle
+exacte et arrondi vers les entiers appropriés. Dans une colonne, poser
+
+  S = r²−(D*kx−U)².
+
+Si S<0, aucun point n'est possible. Sinon h=isqrt(S)=floor(sqrt(S)). Puisque
+D*ky−V est entier, son carré est ≤S si et seulement si sa valeur absolue est ≤h.
+Les extrémités exactes sont donc
+
+  kb = ceil((V−h)/D),  kt = floor((V+h)/D).
+
+Une colonne non vide est obtenue exactement lorsque kb≤kt. Aucun point tangent
+n'est supprimé et aucun point extérieur n'est ajouté. L'angle n'intervient pas
+pour le disque. Le même chemin est utilisé pour la superellipse p=2.
+
+Les float64 fournis sont convertis en rationnels binaires exacts. Une translation
+de 1/3 en float64 et Fraction(1,3) ne définissent pas strictement le même corps
+translaté : cette différence est explicitement conservée.
+
+3. AUTRES FORMES : BORNES ENGLOBANTES ET CONVEXITÉ DISCRÈTE
+
+L'ellipse tournée est contenue dans le disque de rayon max(R,R/k). Toute
+superellipse utilisée est contenue dans le carré local [-R,R]^2 et donc dans
+le disque de rayon 2R. Ces rayons rationnels donnent une boîte englobante sûre,
+sans racine numérique ni discriminant. Les bornes d'indices sont obtenues par
+floor/ceil rationnels exacts : c'est une réalisation exacte de l'arrondi dirigé.
+
+Dans chaque colonne, la fonction définissant l'appartenance est strictement
+convexe en y (ellipse k>0, superellipse p>1). La suite de ses valeurs aux ordonnées
+du réseau possède donc un minimum discret (éventuellement deux points adjacents).
+Le signe de f(ky)−f(ky+1) localise ce minimum par recherche binaire. Une égalité
+reconnue choisit le minimum de gauche. Si le minimum est extérieur, la colonne
+entière est vide ; cette décision ne dépend pas d'un minimum continu approché.
+
+Si le minimum est intérieur, les points intérieurs forment un intervalle d'indices.
+Deux recherches binaires donnent les extrémités. Les deux extrémités sont ensuite
+acceptées par le prédicat, et leurs voisins extérieurs refusés. Une décision
+indéterminée interrompt la fonction entière : aucune liste tronquée n'est rendue.
+
+4. PRÉDICAT FILTRÉ ET CAS AMBIGUS
+
+Le filtre float64 propage des intervalles en élargissant vers l'extérieur les
+résultats de chaque opération de base. Les sin/cos sont initialement encadrés
+par mpmath.iv pour la valeur exacte de l'angle fourni. Les puissances entières
+sont calculées par multiplications encadrées ; les demi-puissances utilisent une
+racine encadrée. Les autres exposants passent directement à l'étape d'intervalles
+de précision supérieure, sans utiliser une borne supposée pour numpy.power.
+
+Un point est accepté seulement si la borne supérieure de f est ≤1 ; il est
+refusé seulement si la borne inférieure est >1. Les autres cas sont repris :
+  - en arithmétique rationnelle exacte pour les disques et les formes alignées
+    dont les puissances sont évaluables exactement ;
+  - par symétries exactes lorsque deux valeurs comparées sont égales ;
+  - par intervalles à précision croissante (50,100,200,400 chiffres par défaut).
+
+La classe GeometryIndeterminate signale un cas encore ambigu à la précision
+limite. Il est interdit de transformer cet arrêt en exclusion de colonne, en
+valeur nulle, en augmentation d'une tolérance ou en reprise par l'ancien code.
+
+Le chemin d'intervalles dépend de la correction des opérations IEEE utilisées
+par NumPy et du logiciel mpmath.iv. Sa documentation annonce un suivi d'erreur
+par intervalles, tout en précisant le caractère expérimental de ses fonctions.
+Cette dépendance doit être auditée ; les régressions ne sont pas une preuve
+formelle de tous ses composants. Le chemin entier du disque n'en dépend pas.
+Sources techniques primaires :
+  https://mpmath.org/doc/current/contexts.html
+  https://mpmath.org/doc/current/functions/trigonometric.html
+
+5. ENVELOPPE ET LONGUEURS
+
+Les indices entiers sont conservés jusqu'à la construction de l'enveloppe.
+Les tests d'orientation utilisent des entiers Python, évitant les débordements
+d'un produit vectoriel int64. Les points colinéaires intérieurs aux arêtes sont
+écartés ; les sommets extrêmes sont déterminés sans conversion en float.
+
+Les longueurs d'arêtes utilisent encore math.hypot et math.fsum. Elles restent
+numériques, sans borne d'erreur certifiée. Une géométrie combinatoire corrigée
+ne certifie donc ni tous les chiffres du périmètre ni la constante asymptotique C.
+
+6. CRITÈRES GELÉS POUR L'AUDIT INDÉPENDANT DE CETTE CANDIDATE
+
+Ces critères sont consignés après développement et contrôles locaux, avant
+l'audit indépendant : ils ne sont pas présentés comme antérieurs à l'écriture
+du code. Un échec doit être conservé et expliqué, sans sélection de bons cas.
+
+G01. Identité des sources originales et des paquets historiques.
+G02. Conversion rationnelle exacte des int/float/Fraction ; rejet des entrées invalides.
+G03. Bornes entières du disque exactes, y compris rayon fractionnaire et décalage fin.
+G04. Points frontières inclus, points immédiatement extérieurs exclus.
+G05. 249 rayons de 2 à 250, chacun à six angles, ensembles de sommets identiques.
+G06. Les 25 rayons défaillants et R=1000, cinq translations et six angles.
+G07. Les 24 cas rationnels de l'audit précédent et les contre-exemples R=39,41.
+G08. Comparaisons exhaustives de petits disques rationnels à un autre algorithme d'enveloppe.
+G09. Les onze familles de formes des campagnes, avec rotations et translations.
+G10. Comparaison des extrémités de toutes les colonnes, même non extrêmes pour l'enveloppe.
+G11. Encadrements du filtre confrontés à des valeurs de précision supérieure.
+G12. Reprises exactes/par intervalles réellement utilisées ; cas indéterminés arrêtés.
+G13. Symétries discrètes, points dégénérés, subnormaux, bornes de ressources.
+G14. Orientations entières sans débordement, refus des coordonnées float comme indices.
+G15. Conservation des correctifs invariants/K/B et vérification de l'absence de régression.
+G16. Sorties neuves, suspension des campagnes et de C, environnement tracé.
+
+Le succès signifie que ces régressions finies sont réussies. Un verdict général
+sur le code doit encore discuter les hypothèses des intervalles et les limites
+de ressources. Il ne signifie ni certification de C ni preuve mathématique globale.
+
+7. SITUATION SCIENTIFIQUE ET SUITE
+
+La loi globale, le transport vers Haar, le second terme et le reste restent
+conjecturaux. Les valeurs candidates et les erreurs non bornées de la note v0.2
+sont inchangées. Les données historiques ne sont pas réécrites par cette corrective.
+
+L'audit v0.3 est d'abord géométrique et régressif. Aucun profil de calcul de C,
+aucune nouvelle campagne Monte Carlo complète ne doit être lancé dans cette étape.
+Après réception et revue du verdict indépendant, une étape distincte pourra
+examiner les incertitudes de discrétisation, de support ciblé et de queues de C.

@@ -1,0 +1,563 @@
+{
+  "status": "PASS_LOCAL_GEOMETRY_REGRESSIONS",
+  "scope": "Finite geometry regressions; no full numerical/asymptotic certification.",
+  "C_recalculated": false,
+  "full_campaign_run": false,
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "mpmath": "1.4.1"
+  },
+  "candidate_sha256": {
+    "balayage_translations.py": "91880497244e360c8de87b2c075a325e5fa670d65086805e735d8c565cccc606",
+    "check_datasets.py": "88058e77cb419582a99ae0b9bf95f449179b323c9f2f9f83b8b442446fcd4add",
+    "coefficient_B.py": "6ed54d87fed02111856139352801a7e8a9baf84612b51f5e86a31696dfb902fd",
+    "formule_integrale.py": "5ba7ed39b7ffc892369f89a00be70a3cc37e78594313131cc230e6bb41b926b0",
+    "geometry_columns.py": "6f142ffdea296c508dba4f002c4304fb3783bc40674032289f64107f70a7cee5",
+    "geometry_predicates.py": "e09d737e3d14ce4562b7eeb5c991cc3cdbdc86dc6cf76939a478b47ebe72e6ff",
+    "integral_model.py": "9278e80de5034317329c25c6e83c17a38f9c799bc7dbd5d46bdb09af1ddab311",
+    "invariant_checks.py": "74b15d6ec940ab361e8f378d122dc825f9620c3179d81c204e5e9d737fc34279",
+    "run_geometry_checks.py": "a5e1b65d7a28ae860b1043e6a4ca88ad70589e2e65caaefa57a61211360ba228",
+    "test_classes_w0.py": "40dcb9b5ccd3d4becc2ed9c4560a0a30775b1fb2891886ec7d547cabf8c4dd38",
+    "test_geometry_v03.py": "d6aa247f873d9cbc73605d8d42713f6bd584300681daf5022c1d91245ecedd31",
+    "test_regressions.py": "da39e94e77866a5bd3d29daeee42a1f705928dc68b4f5408b95741e1b9b84b78"
+  },
+  "all_radii_2_250": {
+    "cases": 1494,
+    "failures": [],
+    "passed": 1494
+  },
+  "previous_counterexamples": [
+    {
+      "R": 31,
+      "expected_vertices": 36,
+      "actual_vertices": 36,
+      "missing": [],
+      "extra": [],
+      "perimeter": 193.49591882777477,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    },
+    {
+      "R": 39,
+      "expected_vertices": 52,
+      "actual_vertices": 52,
+      "missing": [],
+      "extra": [],
+      "perimeter": 244.3731888648624,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    },
+    {
+      "R": 41,
+      "expected_vertices": 36,
+      "actual_vertices": 36,
+      "missing": [],
+      "extra": [],
+      "perimeter": 256.4612535769317,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    },
+    {
+      "R": 43,
+      "expected_vertices": 36,
+      "actual_vertices": 36,
+      "missing": [],
+      "extra": [],
+      "perimeter": 269.16994317250163,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    },
+    {
+      "R": 53,
+      "expected_vertices": 44,
+      "actual_vertices": 44,
+      "missing": [],
+      "extra": [],
+      "perimeter": 332.10301031151954,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    },
+    {
+      "R": 1000,
+      "expected_vertices": 404,
+      "actual_vertices": 404,
+      "missing": [],
+      "extra": [],
+      "perimeter": 6282.8915023767695,
+      "predicate_path": "EXACT_RATIONAL_DISK"
+    }
+  ],
+  "failed_radii_and_1000_with_shifts": {
+    "cases": 780,
+    "passed": 780,
+    "failures": []
+  },
+  "old_csv_replays": [
+    {
+      "forme": "ellipse",
+      "param": 1.5,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 70,
+      "new_vertex_count": 70,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 4241,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 286
+      },
+      "seconds": 0.010054800000943942
+    },
+    {
+      "forme": "ellipse",
+      "param": 1.5,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 9.094947017729282e-13,
+      "old_vertex_count": 344,
+      "new_vertex_count": 344,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 86092,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 4526
+      },
+      "seconds": 0.03377430000000459
+    },
+    {
+      "forme": "ellipse",
+      "param": 2.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 5.684341886080802e-14,
+      "old_vertex_count": 62,
+      "new_vertex_count": 62,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 4236,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 290
+      },
+      "seconds": 0.010020199999416946
+    },
+    {
+      "forme": "ellipse",
+      "param": 2.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 326,
+      "new_vertex_count": 326,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 89011,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 4754
+      },
+      "seconds": 0.0334234000001743
+    },
+    {
+      "forme": "ellipse",
+      "param": 2.0,
+      "R": 30000.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 2660,
+      "new_vertex_count": 2660,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 3033076,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 119402
+      },
+      "seconds": 0.8891098999993119
+    },
+    {
+      "forme": "ellipse",
+      "param": 3.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 51,
+      "new_vertex_count": 51,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 4673,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 340
+      },
+      "seconds": 0.010189599999648635
+    },
+    {
+      "forme": "ellipse",
+      "param": 3.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 273,
+      "new_vertex_count": 273,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 64158,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 2756
+      },
+      "seconds": 0.027235400000790833
+    },
+    {
+      "forme": "ellipse",
+      "param": 5.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 42,
+      "new_vertex_count": 42,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 5001,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 378
+      },
+      "seconds": 0.009308699998655356
+    },
+    {
+      "forme": "ellipse",
+      "param": 5.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 9.094947017729282e-13,
+      "old_vertex_count": 240,
+      "new_vertex_count": 240,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 82255,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 4238
+      },
+      "seconds": 0.03132319999895117
+    },
+    {
+      "forme": "super",
+      "param": 1.5,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": -1.1368683772161603e-13,
+      "old_vertex_count": 65,
+      "new_vertex_count": 65,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 7693,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 390
+      },
+      "seconds": 0.011697300000378164
+    },
+    {
+      "forme": "super",
+      "param": 1.5,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 362,
+      "new_vertex_count": 362,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 126641,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 4584
+      },
+      "seconds": 0.05377249999946798
+    },
+    {
+      "forme": "super",
+      "param": 1.5,
+      "R": 30000.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 3036,
+      "new_vertex_count": 3036,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 4268653,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 118380
+      },
+      "seconds": 1.451415999999881
+    },
+    {
+      "forme": "super",
+      "param": 2.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 78,
+      "new_vertex_count": 78,
+      "geometry_stats": {
+        "path": "EXACT_RATIONAL_DISK",
+        "returned_extrema": 400
+      },
+      "seconds": 0.0009909000000334345
+    },
+    {
+      "forme": "super",
+      "param": 2.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 406,
+      "new_vertex_count": 406,
+      "geometry_stats": {
+        "path": "EXACT_RATIONAL_DISK",
+        "returned_extrema": 4920
+      },
+      "seconds": 0.00862319999941974
+    },
+    {
+      "forme": "super",
+      "param": 2.5,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 73,
+      "new_vertex_count": 73,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 7865,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 408
+      },
+      "seconds": 0.013306299999385374
+    },
+    {
+      "forme": "super",
+      "param": 2.5,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 9.094947017729282e-13,
+      "old_vertex_count": 410,
+      "new_vertex_count": 410,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 135512,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 5248
+      },
+      "seconds": 0.0616704000003665
+    },
+    {
+      "forme": "super",
+      "param": 3.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 2.2737367544323206e-13,
+      "old_vertex_count": 76,
+      "new_vertex_count": 76,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 7801,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 400
+      },
+      "seconds": 0.011360599999534315
+    },
+    {
+      "forme": "super",
+      "param": 3.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 373,
+      "new_vertex_count": 373,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 132030,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 4980
+      },
+      "seconds": 0.05147769999894081
+    },
+    {
+      "forme": "super",
+      "param": 4.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 62,
+      "new_vertex_count": 62,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 8472,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 470
+      },
+      "seconds": 0.011428200001319055
+    },
+    {
+      "forme": "super",
+      "param": 4.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 369,
+      "new_vertex_count": 369,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 143617,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 5850
+      },
+      "seconds": 0.05381620000116527
+    },
+    {
+      "forme": "super",
+      "param": 5.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 61,
+      "new_vertex_count": 61,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 8691,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 492
+      },
+      "seconds": 0.012546500000098604
+    },
+    {
+      "forme": "super",
+      "param": 5.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 1.8189894035458565e-12,
+      "old_vertex_count": 333,
+      "new_vertex_count": 333,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 145604,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 5998
+      },
+      "seconds": 0.05957560000024387
+    },
+    {
+      "forme": "super",
+      "param": 10.0,
+      "R": 100.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 49,
+      "new_vertex_count": 49,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 8293,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 454
+      },
+      "seconds": 0.013641400000778958
+    },
+    {
+      "forme": "super",
+      "param": 10.0,
+      "R": 1230.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 246,
+      "new_vertex_count": 246,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 150378,
+        "exact_decisions": 0,
+        "interval_refinements": 0,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 6364
+      },
+      "seconds": 0.06775720000041474
+    },
+    {
+      "forme": "super",
+      "param": 10.0,
+      "R": 30000.0,
+      "sample": 0,
+      "perimeter_difference": 0.0,
+      "old_vertex_count": 2091,
+      "new_vertex_count": 2091,
+      "geometry_stats": {
+        "path": "FILTERED_CONVEX_INTEGER_SEARCH",
+        "filtered_decisions": 4899483,
+        "exact_decisions": 0,
+        "interval_refinements": 1,
+        "indeterminate": 0,
+        "exact_symmetry_ties": 0,
+        "returned_extrema": 153624
+      },
+      "seconds": 1.8464635000000271
+    }
+  ],
+  "old_csv_replay_max_abs_perimeter_difference": 1.8189894035458565e-12,
+  "old_csv_replay_same_vertex_count": true,
+  "seconds_total": 8.796552100000554
+}

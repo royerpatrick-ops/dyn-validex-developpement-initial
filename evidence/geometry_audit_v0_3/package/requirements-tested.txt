@@ -1,0 +1,5 @@
+# Tested environment: CPython 3.12.14, Linux x86_64
+# These are the versions used locally, not a compatibility guarantee for Python 3.14.
+numpy==2.3.5
+scipy==1.17.0
+mpmath==1.4.1

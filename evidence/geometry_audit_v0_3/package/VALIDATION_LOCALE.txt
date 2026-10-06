@@ -1,0 +1,59 @@
+DYN-VALIDEX — VALIDATION LOCALE v0.3
+Exécutions réelles du 2 octobre 2026 ; candidate destinée à un audit indépendant.
+
+Environnement : Python 3.12.14/Linux ; NumPy 2.3.5 ; SciPy 1.17.0 ; mpmath 1.4.1.
+La v0.3 n'a pas été exécutée ici sous Windows/Python 3.14.5.
+
+Suite finale : 33/33 tests réussis en 8,432 secondes.
+15 tests hérités couvrent les correctifs v0.2 ; leur test de conservation de
+l'ancien code géométrique a été remplacé par le contrôle de l'API entière.
+18 tests géométriques supplémentaires couvrent frontières, voisinages, translations,
+angles, références distinctes, intervalles, arrêts, subnormaux et limites.
+
+Contrôle structuré final : PASS_LOCAL_GEOMETRY_REGRESSIONS.
+  1494/1494 comparaisons de sommets : rayons 2..250, chacun à six angles.
+  780/780 comparaisons : 25 anciens rayons défaillants plus R=1000,
+    cinq translations rationnelles, six angles.
+  24/24 cas rationnels de l'audit précédent : vérifiés dans la suite unitaire.
+  15 petits disques à rayon/translation rationnels : grille entière exhaustive
+    et enveloppe Jarvis, distincte de la recherche de colonnes et de l'enveloppe active.
+  33 cas des onze familles historiques : grille exhaustive à petit R, exactitude
+    rationnelle lorsque possible, sinon évaluation indépendante à 120 chiffres.
+  3 cas supplémentaires comparent toutes les extrémités de colonnes, pas seulement
+    les sommets qui survivent à l'enveloppe.
+  320 valeurs du filtre comparées à des intervalles à 150 chiffres.
+  Un exposant rationnel 13/10 force le chemin hors entiers/demi-entiers.
+  Les ambiguïtés volontaires sont refusées ; aucun résultat partiel n'est retourné.
+
+Contre-exemples corrigés, translation nulle, theta=0.314159 :
+  R=31 : 36 sommets attendus et retrouvés.
+  R=39 : 52 sommets attendus et retrouvés, sans substitution des points frontières.
+  R=41 : 36 sommets attendus et retrouvés, sans sommets intérieurs de substitution.
+  R=1000 : 404 sommets attendus et retrouvés.
+Les ensembles de sommets sont comparés, et non leur nombre seulement.
+
+25 relectures déterministes de lignes CSV historiques, dont trois à R=30000 :
+  mêmes nombres de sommets dans les 25 cas ;
+  différence maximale absolue de périmètre : 1,8189894035458565e-12.
+Ces relectures ne créent pas de nouveaux tirages ni une nouvelle campagne.
+Durée du contrôle structuré final : environ 14,6 secondes dans cet environnement.
+
+Les sorties existantes sont refusées avant calcul et leurs empreintes sont
+conservées. Les CLI C, campagne et Monte Carlo par classes sont suspendues ;
+leurs tests confirment un échec sans création de résultats. Les noyaux mathématiques
+acceptés sont préservés, et le noyau de l'estimation de C est inchangé au niveau AST.
+Aucun nouveau C n'a été calculé. Les statistiques historiques ne sont pas réécrites.
+
+Les 89 fichiers originaux, le PDF et les paquets historiques restent inchangés.
+45 programmes historiques et 12 programmes candidats passent l'analyse AST.
+Les premières sorties locales sont conservées ; geometry_release et tests_release
+sont les résultats du code final gelé, avec empreintes de tous les modules.
+
+Limites : ces contrôles sont finis. Le chemin général suppose la correction du
+filtre IEEE et de mpmath.iv ; cette dépendance expérimentale exige une revue.
+Le chemin entier du disque n'en dépend pas. Les références générales à 120/150
+chiffres partagent certains composants mpmath avec le candidat et ne sont pas
+une certification indépendante de ces composants. Les références rationnelles
+et l'enveloppe Jarvis apportent des contrôles distincts pour les cas correspondants.
+Les longueurs restent en virgule flottante. La précision totale de C, le second
+terme et la loi globale ne sont pas démontrés par cette corrective.

@@ -1,0 +1,40 @@
+{
+  "_status": "DRAFT_BLOCKED_MISSING_HUMAN_METADATA",
+  "_corrective_version": "0.1a",
+  "_not_for_automatic_upload": true,
+  "_missing_required_metadata": [
+    "creators[].name",
+    "rights_and_license_owner_confirmation"
+  ],
+  "title": "Déficit de périmètre des enveloppes entières randomisées : conjecture à deux termes, résultats numériques et applications à la mesure des courbes convexes",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "description_file": "DESCRIPTION.md",
+  "creators": [],
+  "keywords": [
+    "integer convex hull",
+    "randomized lattice",
+    "perimeter deficit",
+    "curvature integrals",
+    "digital geometry",
+    "numerical conjecture"
+  ],
+  "publication_date": "2026-10-04",
+  "version": "0.1a",
+  "language": "fra",
+  "license": null,
+  "license_proposals_pending_owner_confirmation": {
+    "manuscript_and_data": "cc-by-4.0",
+    "code": "MIT"
+  },
+  "doi_communicated": "10.5281/zenodo.23110956",
+  "doi_public_status": "unknown; verify in the owner's authenticated Zenodo draft",
+  "notes": [
+    "No creator name, affiliation or ORCID has been inferred.",
+    "The authorized depositor must populate creators and decide whether affiliation or ORCID is applicable.",
+    "Confirm rights and licenses before publication.",
+    "P2 status: NOT_RUN.",
+    "The two-term law is a conjecture.",
+    "This corrective was not externally published."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "manuscript": {
+    "file": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1b.pdf",
+    "sha256": "24511800a7cd5b7ba4248152bdb63202c3f998834463ce2e245bd4b04a5f3509",
+    "pages": 9,
+    "visually_inspected_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "display_equations": 18,
+    "overlap_or_clipping_found": false,
+    "missing_glyphs_found": false,
+    "reuse_receipt": "evidence/PDF_VISUAL_REUSE_v0_1b.json"
+  },
+  "licence": {
+    "file": "licenses/DYN-LICENCE_DEL_v1_1.pdf",
+    "sha256": "a81a7b31574d8846ce4e762d378f52cbbee6413b4ef161ecf0bfe55cb05191fa",
+    "pages": 6,
+    "visually_inspected_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "overlap_or_clipping_found": false,
+    "missing_glyphs_found": false
+  },
+  "scope": "Documentary QA; no new scientific run, theorem proof or legal certification."
+}

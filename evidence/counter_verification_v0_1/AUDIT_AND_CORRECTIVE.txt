@@ -1,0 +1,190 @@
+DYN-CONTRE-VERIFICATION_ZENODO_DEFICIT-PERIMETRE v0.1
+4 octobre 2026
+
+OBJET ET VERDICT
+
+Contre-vérification de la candidate Zenodo v0.1 transmise, sans modification
+du ZIP source, sans nouvelle génération d'enveloppes et sans campagne P2.
+
+Verdict : noyau numérique corroboré ; corrective documentaire et de rendu
+nécessaire avant le dépôt public. Les coefficients universels, le second
+terme asymptotique et le reste demeurent conjecturaux.
+
+SOURCE
+
+DYN-CANDIDATE_ZENODO_DEFICIT-PERIMETRE_v0_1.zip
+SHA-256 : d95c54ff82366f910ecfdd2df949c27f42b8a4201df70e7cfeaea529f2451407
+120 entrées, 119 empreintes internes exactes, aucun échec CRC.
+SHA256SUMS.txt est bien l'unique fichier exclu du manifeste.
+
+RÉSULTATS CORROBORÉS
+
+Les deux CSV contiennent respectivement 18 304 et 4 608 lignes. Les contrôles
+de grain par campagne, de doublons, de valeurs manquantes/non finies,
+de translations, d'angles et de déficit négatif ne révèlent pas de défaut.
+Les différences entre P_cont - P_hull et deficit_abs restent au niveau des
+arrondis de lecture/écriture float64 : maxima environ 5,82e-11 et 9,31e-10.
+
+Le noyau sélectionné contient 8 448 tirages, regroupés en 92 moyennes pour
+quatre formes et 23 rayons. Au rayon commun R=30 000, les 64+128 tirages sont
+distincts : aucun doublon de (forme, paramètre, R, theta, u, v) n'est trouvé.
+L'identifiant d'échantillon doit rester associé à sa campagne source.
+
+Recalcul autonome des invariants, sans importer les modules candidats :
+paramétrage radial x=(1+t^p)^(-1/p), y=t*x, puis t=u^6 pour les superellipses ;
+paramétrage trigonométrique direct pour les ellipses. Les intégrales sont
+évaluées en double précision ; ces quadratures ne sont pas des certificats
+par intervalles. Les maximums de différence sur les moyennes C_eff et leurs
+erreurs-types sont respectivement 2,22e-16 et 9,67e-17.
+
+Modèle fixé C_inf=0,7192, B=0,2894 :
+  chi2 = 106,843594433239
+  chi2/n = 1,161343417753
+  max |z| = 2,693532164134
+
+Ajustement libre diagonal :
+  C_inf = 0,720406578490 +/- 0,000548761799
+  B = 0,296053488200 +/- 0,003278351881
+  chi2 = 101,993063469904, ddl=90
+  corr(C_inf,B) = 0,942364952306
+
+Les différences finales de dernière décimale avec le JSON candidat sont des
+effets flottants négligeables à la précision publiée. Le modèle diagonal et
+la définition SE=SD(ddof=1)/sqrt(n) ont été conservés.
+
+Ces erreurs-types sont nominales : elles n'incluent ni covariance croisée,
+ni incertitude de sélection du modèle, ni erreur systématique géométrique,
+ni incertitude totale des constantes. La forte corrélation des paramètres
+limite leur séparation sur cette fenêtre d'échelles.
+
+Décomposition descriptive du chi2 fixé, pour 23 moyennes par forme :
+  disque       : 40,1967 ; chi2/n = 1,7477
+  ellipse 2:1  : 27,0405 ; chi2/n = 1,1757
+  ellipse 5:1  : 20,1198 ; chi2/n = 0,8748
+  super p=3    : 19,4865 ; chi2/n = 0,8472
+La qualité de l'accord agrégé n'est pas uniforme entre formes. Aucun test
+confirmatoire ni conclusion asymptotique n'est tiré de cette décomposition.
+
+p=1,75 : le JSON contient 5 888 périmètres répartis en sept groupes de
+1024/1024/1024/1024/1024/512/256 valeurs. Le script fourni fonctionne avec
+son argument --data-dir. Le paramétrage indépendant redonne, à la précision
+du manuscrit, chi2=12,1043 sans couche, chi2=5,5879 à gamma fixé à 16/33 et
+gamma libre environ 0,28015 +/- 0,20583. L'exposant reste peu identifié.
+De faibles différences des dernières décimales sont sensibles au périmètre
+continu utilisé dans la soustraction à grand R : ne pas leur attribuer le
+statut de chiffres certifiés.
+
+L'audit géométrique v0.3 et ses statuts archivés sont lus et cohérents avec
+la portée finie décrite. Ses tests n'ont pas été réexécutés dans cette revue.
+La présence de ce code corrigé ne valide pas rétroactivement toutes les
+valeurs P_hull historiques ni les grands rayons.
+
+CORRECTIONS CIBLÉES
+
+F01. Commandes de reproduction : deux échecs réellement reproduits.
+  README : --candidate-root n'est pas un argument reconnu ; code retour 2.
+  Manuscrit, section 11 : reanalyse_zenodo_main.py est absent ; code retour 2.
+
+  Commande correcte, exécutée ici avec succès depuis la racine candidate :
+  python code/reanalysis/reanalyse_zenodo_candidate.py --root . --output evidence/reanalysis_reproduced
+
+  Remplacer les deux commandes dans README, source et PDF ; vérifier la
+  cohérence de tous les modes d'emploi. Les logs d'échec/succès sont joints.
+
+F02. Mesure de randomisation, section 2.
+  Pour un réseau tourné, écrire L=rho(Z^2+t), avec t uniforme sur [0,1)^2
+  et rho uniforme sur SO(2), indépendants. Dans l'écriture L=rho Z^2+u,
+  la translation u doit être uniforme dans la cellule tournée rho[0,1)^2,
+  et non dans un carré fixe indépendant de rho.
+  La randomisation de la forme P_R=conv((g R K+u) inter Z^2), u uniforme
+  dans le carré fixe, reste valable. Expliquer le transport inverse entre
+  les deux descriptions. Les simulations ne sont pas invalidées par cette
+  correction de notation.
+
+F03. Espérance du biais sur pi, section 10.3.
+  Remplacer la formule portant sur un tirage pi_h par :
+  pi - E[pi_h] = pi [C_inf (h/a)^(4/3) - B (h/a)^(3/2)]
+                + o((h/a)^(3/2)), pour un a fixé, conditionnellement à
+  la conjecture à deux termes.
+
+  L'estimateur corrigé pi_hat=pi_h/[1-C_inf(h/a)^(4/3)+B(h/a)^(3/2)]
+  est défini pour un dénominateur non nul. Il conserve une dispersion entre
+  tirages ; l'annulation candidate du biais moyen ne garantit pas une erreur
+  individuelle de l'ordre du reste. La règle de résolution de la section
+  10.2 vise également le biais moyen, sans garantie par tirage.
+
+F04. PDF et résumé.
+  Les dix pages ont été inspectées visuellement. Le PDF affiche des formules
+  sous forme de texte brut (C_∞, I_(4/3), R^(-1/3), etc.) et des glyphes
+  manquants, notamment dans le résumé p. 2. Régénérer avec une vraie
+  composition mathématique et vérifier les dix pages.
+  Dans le résumé, préférer l'égalité avec reste +o(R^(-1/2)) à l'équivalence
+  « ~ » à une expression à deux termes : une équivalence au seul terme
+  dominant ne caractérise pas le coefficient secondaire.
+
+F05. Classe théorique et superellipse p=3.
+  La superellipse p=3 a une courbure nulle aux points axiaux ; elle sort de
+  la classe principale choisie avec kappa_min>0. Conserver les 92 résultats,
+  mais identifier les trois formes régulières et cette extension exploratoire
+  au sein de l'agrégat. Ne pas laisser entendre que les quatre formes relèvent
+  toutes de cette classe principale. Le théorème d'ordre a sa propre classe,
+  distincte de l'hypothèse prudente retenue pour la conjecture à deux termes.
+
+F06. Registre C08 et indépendance historique.
+  La présente réanalyse prouve que les deux valeurs sont fixées pendant ce
+  recalcul. Des scripts séparés ne prouvent pas, à eux seuls, qu'elles n'ont
+  jamais été sélectionnées/calibrées en consultant les mêmes données.
+  Reformuler C08 comme « constantes fixées lors de la réanalyse » avec ce
+  statut vérifié, ou conserver la revendication historique en la marquant
+  PRESENT_UNVERIFIED sans une trace chronologique suffisante. Conserver la
+  réserve de sélection de modèle déjà bien formulée dans le manuscrit.
+
+FINALISATION ZENODO
+
+Une corrective v0.1a distincte peut résoudre F01-F06 sans nouvelle campagne,
+sans modifier les CSV et sans modifier les chiffres centraux à leur précision
+publiée. Refaire les empreintes après toute modification des pièces.
+
+Pour les métadonnées, remplacer le créateur provisoire par le nom souhaité
+par l'auteur ; compléter affiliation/ORCID s'ils sont utilisés ; arrêter les
+licences et attributions avant diffusion. Ne pas inventer une affiliation.
+Le JSON de métadonnées est un brouillon et ne doit pas être envoyé inchangé.
+
+La candidate rapporte des HTTP 404 DataCite et Zenodo. Cette revue n'a pas pu
+accéder aux URL publiques Zenodo depuis son outil web ; elle n'atteste donc
+pas de nouveaux codes HTTP 404. Conserver « statut exact du DOI inconnu,
+à confirmer dans le brouillon propriétaire », sans conclure à son inexistence.
+
+Les pièces p=1,5, la localisation et P2 ne sont pas nécessaires à une
+publication limitée au noyau numérique présent, si leur absence et la portée
+des annexes sont explicites. P2 reste NOT_RUN. Un jeu confirmatoire distinct
+renforcerait la conjecture, mais n'est pas une condition imposée à un dépôt
+présenté comme note exploratoire.
+
+PROTOCOLE PRÊT À TRANSMETTRE À CODEX
+
+Prépare une corrective documentaire distincte v0.1a de la candidate Zenodo
+en appliquant F01-F06 ci-dessus. Conserve l'archive v0.1 et les données sources.
+Corrige les deux commandes, la mesure de randomisation et l'espérance de
+pi_h ; précise la place exploratoire de p=3 ; borne C08 à ce qui est attesté.
+Régénère le PDF avec des formules composées et sans symboles manquants.
+Reprends les résultats statistiques reproduits, leurs incertitudes nominales
+et les réserves. Prépare les métadonnées sans identité ou affiliation inventée.
+Vérifie le mode d'emploi depuis la racine de la corrective. Mets à jour les
+empreintes et livre ZIP, source et PDF. Aucun nouveau générateur, aucune
+campagne P2 et aucune publication externe ne font partie de cette corrective.
+
+CONTENU DE CETTE CONTRE-VÉRIFICATION
+
+- code/check_candidate_independently.py : invariants et statistiques autonomes.
+- evidence/independent_check.json : profils, tailles, résultats et covariance.
+- evidence/independent_92_points.csv et independent_p175.csv : moyennes.
+- evidence/command_receipts.json et logs : deux échecs et deux succès.
+- evidence/reanalysis_provided_script/ : réanalyse via le script fourni.
+- evidence/environment.json : environnement de cette revue.
+- SHA256SUMS.txt : empreintes du présent paquet, hors auto-empreinte.
+
+Le script autonome lit directement le ZIP source, vérifie son intégrité et
+recalcule les sorties, sans importer ni exécuter de code candidat. Son
+répertoire de sortie doit être nouveau. Exemple :
+python code/check_candidate_independently.py --zip CHEMIN_CANDIDATE.zip --output NOUVEAU_DOSSIER

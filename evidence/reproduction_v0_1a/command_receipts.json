@@ -1,0 +1,23 @@
+{
+  "working_directory": "DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a",
+  "date": "2026-10-04",
+  "central_reanalysis": {
+    "command": "python code/reanalysis/reanalyse_zenodo_candidate.py --root . --output evidence/reanalysis_reproduced",
+    "exit_code": 0,
+    "stdout": "central_command_stdout.json",
+    "stderr": "",
+    "generated": [
+      "evidence/reanalysis_reproduced/reanalysis_summary.json",
+      "evidence/reanalysis_reproduced/reanalysis_92_points.csv",
+      "evidence/reanalysis_reproduced/REANALYSE_92_POINTS.md"
+    ]
+  },
+  "p175_reanalysis": {
+    "command": "python code/reanalysis/recompute_superellipse_stats.py 1.75 --data-dir data/raw",
+    "exit_code": 0,
+    "stdout": "p175_command_stdout.txt",
+    "stderr": "",
+    "generated": []
+  },
+  "scope": "Read-only analysis of existing CSV and JSON data. No hull generator, no P2 campaign, no external publication."
+}

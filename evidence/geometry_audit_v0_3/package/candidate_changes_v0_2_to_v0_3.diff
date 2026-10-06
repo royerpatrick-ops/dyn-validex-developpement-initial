@@ -1,0 +1,887 @@
+--- v0.2/candidate/balayage_translations.py
++++ v0.3/candidate/balayage_translations.py
+@@ -1,5 +1,5 @@
+ """
+-Balayage v2 : déficit de périmètre de l'enveloppe entière avec moyenne
++Candidate v0.3 : déficit de périmètre de l'enveloppe entière avec moyenne
+ sur rotations ET translations aléatoires du centre.
+ 
+ Correction par rapport à balayage_corrige.py : pour le disque (et les formes
+@@ -13,8 +13,6 @@
+ """
+ import sys, time, math, zlib
+ import numpy as np  # pyright: ignore[reportMissingImports]
+-from scipy.spatial import ConvexHull  # pyright: ignore[reportMissingImports]
+-from scipy.integrate import quad  # pyright: ignore[reportMissingImports]
+ from multiprocessing import Pool
+ 
+ N_SAMPLES = 64
+@@ -33,62 +31,15 @@
+ # ------------------------------------------------------------------
+ # Points extrêmes de chaque colonne du réseau Z² - (u, v) dans R·K
+ # ------------------------------------------------------------------
+-def columns(kind, prm, R, th, u, v):
+-    c, s = math.cos(th), math.sin(th)
+-    if kind == "super":
+-        p = prm
+-        F = lambda x, y: (np.abs((c * x + s * y) / R) ** p
+-                          + np.abs((-s * x + c * y) / R) ** p)
+-        ext = R * max(1.0, 2.0 ** (0.5 - 1.0 / p)) + 2
+-    else:
+-        a, b = R, R / prm
+-        A = c * c / a ** 2 + s * s / b ** 2
+-        Bc = c * s * (1 / a ** 2 - 1 / b ** 2)
+-        C = s * s / a ** 2 + c * c / b ** 2
+-        F = lambda x, y: A * x * x + 2 * Bc * x * y + C * y * y
+-        ext = math.sqrt(C / (A * C - Bc * Bc)) + 2
+-    kx = np.arange(math.floor(-ext + u), math.ceil(ext + u) + 1, dtype=float)
+-    xs = kx - u
+-    if kind == "super":
+-        lo = np.full_like(xs, -ext); hi = np.full_like(xs, ext)
+-        g = (math.sqrt(5) - 1) / 2
+-        for _ in range(90):
+-            a1 = hi - g * (hi - lo); b1 = lo + g * (hi - lo)
+-            m = F(xs, a1) < F(xs, b1)
+-            hi = np.where(m, b1, hi); lo = np.where(m, lo, a1)
+-        ym = 0.5 * (lo + hi)
+-        ok = F(xs, ym) <= 1.0
+-        xs, ym = xs[ok], ym[ok]
+-
+-        def bound(sign):
+-            a1 = ym.copy(); b1 = ym + sign * 2 * ext
+-            for _ in range(75):
+-                mid = 0.5 * (a1 + b1)
+-                inside = F(xs, mid) <= 1.0
+-                a1 = np.where(inside, mid, a1); b1 = np.where(inside, b1, mid)
+-            return a1
+-        ytop, ybot = bound(+1), bound(-1)
+-    else:
+-        disc = Bc * Bc * xs * xs - C * (A * xs * xs - 1)
+-        ok = disc >= 0
+-        xs, disc = xs[ok], disc[ok]
+-        ytop = (-Bc * xs + np.sqrt(disc)) / C
+-        ybot = (-Bc * xs - np.sqrt(disc)) / C
+-    # entiers k_y tels que k_y - v soit dans [ybot, ytop], test d’appartenance en virgule flottante
+-    kt = np.floor(ytop + v + 1e-9); kb = np.ceil(ybot + v - 1e-9)
+-    for _ in range(2):
+-        kt = np.where(F(xs, kt - v) > 1.0, kt - 1, kt)
+-        kb = np.where(F(xs, kb - v) > 1.0, kb + 1, kb)
+-    keep = kt >= kb
+-    xs, kt, kb = xs[keep], kt[keep], kb[keep]
+-    return np.vstack([np.column_stack([xs, kt - v]), np.column_stack([xs, kb - v])])
++from geometry_columns import columns, column_indices, integer_hull_perimeter
+ 
+ 
+ def hull_perim(pts):
+-    h = ConvexHull(pts)
+-    w = pts[h.vertices]
+-    d = np.diff(np.vstack([w, w[:1]]), axis=0)
+-    return float(np.hypot(d[:, 0], d[:, 1]).sum()), len(h.vertices)
++    """v0.3: integer indices required; translated float coordinates are display-only."""
++    pts = np.asarray(pts)
++    if not np.issubdtype(pts.dtype, np.integer):
++        raise ValueError("Use column_indices(), not translated float coordinates")
++    return integer_hull_perimeter(pts)
+ 
+ 
+ # ------------------------------------------------------------------
+@@ -98,7 +49,7 @@
+     out = []
+     for i in range(N_SAMPLES):
+         th = rng.uniform(0, math.pi / 2); u, v = rng.uniform(0, 1, 2)
+-        Ph, m = hull_perim(columns(kind, prm, R, th, u, v))
++        Ph, m = integer_hull_perimeter(column_indices(kind, prm, R, th, u, v))
+         Pc = P1 * R
+         assert Ph <= Pc + 1e-6
+         out.append((kind, prm, R, i, th, u, v, Pc, Ph, Pc - Ph, m))
+@@ -133,6 +84,7 @@
+     parser.add_argument("--out", type=str, help="nouveau dossier pour la campagne")
+     args = parser.parse_args()
+     if args.campaign:
++        parser.error("Campagnes suspendues dans v0.3: audit geometrique requis")
+         if not args.out:
+             parser.error("--out requis avec --campaign")
+         import os
+--- v0.2/candidate/formule_integrale.py
++++ v0.3/candidate/formule_integrale.py
+@@ -90,6 +90,7 @@
+     p.add_argument('--seed', type=int, default=42012)
+     p.add_argument('--out', type=Path, required=True)
+     args = p.parse_args()
++    p.error("Recalcul de C suspendu dans v0.3; audit geometrique uniquement")
+     settings = {
+         'smoke': {},
+         'validation': dict(n=200000, target_n=50000, intervals=29, order=6, tail_intervals=3, tail_order=6),
+--- /dev/null
++++ v0.3/candidate/geometry_columns.py
+@@ -0,0 +1,126 @@
++"""Column extrema from exact rational bounds and decisive membership predicates.
++
++No continuous minimizer, discriminant or floating floor/ceil determines exclusion.
++The non-disk search uses strict convexity to find a discrete minimum, then two
++monotone searches. Ambiguous predicates abort the call. 'certified' refers to
++this algorithm's acceptance rule, not a certification of the asymptotic law.
++"""
++from fractions import Fraction
++import math
++import numpy as np
++from geometry_predicates import BodyPredicate, rational
++
++def floor_fraction(x):
++    return x.numerator//x.denominator
++
++def ceil_fraction(x):
++    return -((-x.numerator)//x.denominator)
++
++def disk_column_indices(R,u=0,v=0,*,max_columns=2000005):
++    R,u,v=map(rational,(R,u,v))
++    if R<=0 or not (0<=u<1 and 0<=v<1):
++        raise ValueError('R>0 and translations in [0,1) required')
++    xmin,xmax=ceil_fraction(u-R),floor_fraction(u+R)
++    if xmax-xmin+1>max_columns:
++        raise ValueError('column budget exceeded')
++    D=math.lcm(R.denominator,u.denominator,v.denominator)
++    radius=int(R*D);U=int(u*D);V=int(v*D)
++    points=[]
++    for kx in range(xmin,xmax+1):
++        square=radius*radius-(D*kx-U)**2
++        if square<0:continue
++        h=math.isqrt(square)
++        bottom=-((h-V)//D);top=(h+V)//D
++        if bottom<=top:
++            points.extend(((kx,bottom),(kx,top)))
++    if points and max(abs(z) for pair in points for z in pair)>2**40:
++        raise ValueError('indices exceed supported range')
++    return np.asarray(points,dtype=np.int64).reshape(-1,2)
++
++def _generic_batch(body,kx,ylo,yhi):
++    lo=np.full(kx.size,ylo,dtype=np.int64);hi=np.full(kx.size,yhi,dtype=np.int64)
++    while np.any(lo<hi):
++        active=np.flatnonzero(lo<hi);mid=(lo[active]+hi[active])//2
++        decrease=body.strictly_decreasing_step(kx[active],mid)
++        lo[active[decrease]]=mid[decrease]+1
++        hi[active[~decrease]]=mid[~decrease]
++    minimum=lo
++    good=body.contains_indices(kx,minimum)
++    kx,minimum=kx[good],minimum[good]
++    if not kx.size:return np.empty((0,2),dtype=np.int64)
++    lo=np.full(kx.size,ylo,dtype=np.int64);hi=minimum.copy()
++    while np.any(lo<hi):
++        active=np.flatnonzero(lo<hi);mid=(lo[active]+hi[active])//2
++        inside=body.contains_indices(kx[active],mid)
++        hi[active[inside]]=mid[inside]
++        lo[active[~inside]]=mid[~inside]+1
++    bottom=lo.copy()
++    lo=minimum.copy();hi=np.full(kx.size,yhi,dtype=np.int64)
++    while np.any(lo<hi):
++        active=np.flatnonzero(lo<hi);mid=(lo[active]+hi[active]+1)//2
++        inside=body.contains_indices(kx[active],mid)
++        lo[active[inside]]=mid[inside]
++        hi[active[~inside]]=mid[~inside]-1
++    top=lo
++    # Assert endpoint and neighbour decisions: guards the search implementation.
++    if not (body.contains_indices(kx,bottom).all() and body.contains_indices(kx,top).all()
++            and not body.contains_indices(kx,bottom-1).any() and not body.contains_indices(kx,top+1).any()):
++        raise ArithmeticError('column extrema verification failed')
++    return np.vstack((np.column_stack((kx,bottom)),np.column_stack((kx,top))))
++
++def column_indices(kind,prm,R,theta,u=0,v=0,*,max_columns=2000005,batch_size=4096,precisions=(50,100,200,400),return_stats=False):
++    if not isinstance(max_columns,int) or max_columns<1 or not isinstance(batch_size,int) or batch_size<1:
++        raise ValueError('positive integer budgets required')
++    body=BodyPredicate(kind,prm,R,theta,u,v,precisions=precisions)
++    if body.disk:
++        result=disk_column_indices(body.R,body.u,body.v,max_columns=max_columns)
++        stats={'path':'EXACT_RATIONAL_DISK','returned_extrema':len(result)}
++    else:
++        B=body.enclosing_radius
++        xmin,xmax=ceil_fraction(body.u-B),floor_fraction(body.u+B)
++        ylo,yhi=floor_fraction(body.v-B),ceil_fraction(body.v+B)
++        if max(abs(xmin),abs(xmax),abs(ylo),abs(yhi))>2**40-1:
++            raise ValueError('bounding box exceeds supported integer range')
++        if xmax-xmin+1>max_columns:
++            raise ValueError('column budget exceeded')
++        parts=[]
++        for begin in range(xmin,xmax+1,batch_size):
++            kx=np.arange(begin,min(begin+batch_size,xmax+1),dtype=np.int64)
++            parts.append(_generic_batch(body,kx,ylo,yhi))
++        result=np.vstack(parts) if parts else np.empty((0,2),dtype=np.int64)
++        stats={'path':'FILTERED_CONVEX_INTEGER_SEARCH',**body.stats,'returned_extrema':len(result)}
++    return (result,stats) if return_stats else result
++
++def columns(kind,prm,R,theta,u=0,v=0):
++    """Compatibility coordinates; membership is decided before conversion to float."""
++    indices=column_indices(kind,prm,R,theta,u,v)
++    return indices.astype(float)-[float(rational(u)),float(rational(v))]
++
++def integer_hull_vertices(points):
++    """Andrew hull with Python-integer orientation, no Qhull or float predicate."""
++    array=np.asarray(points)
++    if array.size==0:return np.empty((0,2),dtype=np.int64)
++    if array.ndim!=2 or array.shape[1]!=2 or not np.issubdtype(array.dtype,np.integer):
++        raise ValueError('an N by 2 array of integer indices is required')
++    if np.any((array < -2**40) | (array > 2**40)):
++        raise ValueError('integer coordinates outside supported range')
++    points=sorted(set((int(x),int(y)) for x,y in array))
++    if len(points)<3:
++        return np.asarray(points,dtype=np.int64).reshape(-1,2)
++    def cross(a,b,c):
++        return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
++    def chain(seq):
++        result=[]
++        for p in seq:
++            while len(result)>=2 and cross(result[-2],result[-1],p)<=0:result.pop()
++            result.append(p)
++        return result[:-1]
++    return np.asarray(chain(points)+chain(points[::-1]),dtype=np.int64).reshape(-1,2)
++
++def integer_hull_perimeter(points):
++    vertices=integer_hull_vertices(points)
++    if len(vertices)<3:
++        raise ValueError('nondegenerate hull required for the perimeter convention')
++    pairs=list(zip(vertices,np.roll(vertices,-1,axis=0)))
++    perimeter=math.fsum(math.hypot(int(b[0])-int(a[0]),int(b[1])-int(a[1])) for a,b in pairs)
++    return perimeter,len(vertices)
+--- /dev/null
++++ v0.3/candidate/geometry_predicates.py
+@@ -0,0 +1,256 @@
++"""Closed-body lattice membership, with exact rationals or filtered intervals.
++
++Inputs int/Fraction are exact. A float means its exact binary rational value,
++including theta (whose mathematical sin/cos, not libm-rounded values, are used).
++No membership tolerance is used. Ambiguity at the precision limit raises.
++The interval path assumes IEEE round-to-nearest basic NumPy operations and
++correct mpmath 1.4.1 interval elementary functions; it is subject to audit.
++"""
++from fractions import Fraction
++import math
++import numpy as np
++from mpmath.ctx_iv import MPIntervalContext
++from mpmath.libmp import to_rational
++
++class GeometryIndeterminate(ArithmeticError):
++    pass
++
++def rational(value):
++    if isinstance(value, bool):
++        raise ValueError('boolean is not a geometry parameter')
++    if isinstance(value, Fraction):
++        result = value
++    elif isinstance(value, (int, np.integer)):
++        result = Fraction(int(value))
++    elif isinstance(value, (float, np.floating)) and math.isfinite(float(value)):
++        result = Fraction(float(value))
++    else:
++        raise ValueError('finite int, float or Fraction required')
++    if not math.isfinite(float(result)):
++        raise ValueError('finite parameter required')
++    return result
++
++def endpoints(value):
++    return tuple(Fraction(*to_rational(endpoint)) for endpoint in value._mpi_)
++
++def iv_rational(ctx, value):
++    return ctx.mpf(value.numerator) / ctx.mpf(value.denominator)
++
++def outward_rational(value):
++    f = float(value)
++    represented = Fraction(f)
++    return (math.nextafter(f, -math.inf) if represented > value else f,
++            math.nextafter(f, math.inf) if represented < value else f)
++
++def integer_arrays(kx,ky):
++    kx,ky=np.broadcast_arrays(np.asarray(kx),np.asarray(ky))
++    if not all(np.issubdtype(a.dtype,np.integer) for a in (kx,ky)):
++        raise ValueError('integer lattice indices required; floats are not truncated')
++    if any(np.any((a < -2**40) | (a > 2**40)) for a in (kx,ky)):
++        raise ValueError('indices exceed the exact float64-filter range')
++    return kx.astype(np.int64),ky.astype(np.int64)
++
++class Interval:
++    """Float64 interval; every basic operation expands its rounded endpoints."""
++    def __init__(self, lo, hi=None):
++        self.lo = np.asarray(lo, dtype=float)
++        self.hi = self.lo if hi is None else np.asarray(hi, dtype=float)
++
++    @staticmethod
++    def enclosing(lo, hi):
++        bad = np.isnan(lo) | np.isnan(hi)
++        lo = np.where(bad, -np.inf, np.nextafter(lo, -np.inf))
++        hi = np.where(bad, np.inf, np.nextafter(hi, np.inf))
++        return Interval(lo, hi)
++
++    def __add__(self, other):
++        with np.errstate(all='ignore'):
++            return self.enclosing(self.lo + other.lo, self.hi + other.hi)
++
++    def __neg__(self):
++        return Interval(-self.hi, -self.lo)
++
++    def __sub__(self, other):
++        return self + (-other)
++
++    def __mul__(self, other):
++        with np.errstate(all='ignore'):
++            products = np.array([self.lo*other.lo, self.lo*other.hi,
++                                 self.hi*other.lo, self.hi*other.hi])
++            return self.enclosing(np.min(products,axis=0),np.max(products,axis=0))
++
++    def __truediv__(self, other):
++        if np.any((other.lo <= 0) & (other.hi >= 0)):
++            return Interval(np.full(np.broadcast_shapes(self.lo.shape,other.lo.shape),-np.inf),
++                            np.full(np.broadcast_shapes(self.hi.shape,other.hi.shape),np.inf))
++        with np.errstate(all='ignore'):
++            inverse = self.enclosing(1/other.hi, 1/other.lo)
++            return self * inverse
++
++    def absolute(self):
++        lo = np.where(self.lo>=0,self.lo,np.where(self.hi<=0,-self.hi,0))
++        return Interval(lo,np.maximum(np.abs(self.lo),np.abs(self.hi)))
++
++    def integer_power(self, n):
++        # Caller uses a nonnegative interval; repeated products avoid np.power's
++        # unspecified elementary-function error at nontrivial exponents.
++        result = Interval(np.ones_like(self.lo))
++        base = self
++        while n:
++            if n & 1:
++                result = result * base
++                result.lo = np.maximum(result.lo,0)
++            n //= 2
++            if n:
++                base = base * base
++                base.lo = np.maximum(base.lo,0)
++        return result
++
++    def positive_power(self, exponent):
++        if exponent.denominator == 1:
++            return self.integer_power(exponent.numerator)
++        if exponent.denominator == 2:
++            with np.errstate(all='ignore'):
++                root = self.enclosing(np.sqrt(np.maximum(self.lo,0)),np.sqrt(np.maximum(self.hi,0)))
++            root.lo = np.maximum(root.lo,0)
++            return root.integer_power(exponent.numerator)
++        # Non-half-integer powers bypass the float64 filter entirely.
++        return Interval(np.full_like(self.lo,-np.inf),np.full_like(self.hi,np.inf))
++
++def exact_power(base, exponent):
++    if base in (0,1):
++        return base
++    if exponent.denominator == 1:
++        return base ** exponent.numerator
++    if exponent.denominator == 2:
++        a,b = math.isqrt(base.numerator),math.isqrt(base.denominator)
++        if a*a == base.numerator and b*b == base.denominator:
++            return Fraction(a,b) ** exponent.numerator
++    return None
++
++class BodyPredicate:
++    def __init__(self, kind, prm, R, theta, u=0, v=0, *, precisions=(50,100,200,400)):
++        if kind not in ('ellipse','super'):
++            raise ValueError('unknown shape')
++        self.kind=kind
++        self.prm,self.R,self.theta,self.u,self.v=map(rational,(prm,R,theta,u,v))
++        if self.R<=0 or self.prm<=0 or (kind=='super' and self.prm<=1):
++            raise ValueError('R>0, ellipse ratio>0 or superellipse p>1 required')
++        if not (0<=self.u<1 and 0<=self.v<1):
++            raise ValueError('translations must be in [0,1)')
++        if not precisions or any(not isinstance(d,int) or d<15 for d in precisions):
++            raise ValueError('positive precision schedule required')
++        self.precisions=tuple(precisions)
++        self.contexts={}
++        self.stats={'filtered_decisions':0,'exact_decisions':0,'interval_refinements':0,
++                    'indeterminate':0,'exact_symmetry_ties':0}
++        self.disk=(kind=='ellipse' and self.prm==1) or (kind=='super' and self.prm==2)
++        self.Rf=Interval(*outward_rational(self.R))
++        self.uf=Interval(*outward_rational(self.u)); self.vf=Interval(*outward_rational(self.v))
++        self.pf=Interval(*outward_rational(self.prm))
++        if self.theta==0 or self.disk:
++            self.cf,self.sf=Interval(1),Interval(0)
++        else:
++            ctx,c,s=self._context(self.precisions[0])
++            cl,ch=endpoints(c);sl,sh=endpoints(s)
++            self.cf=Interval(outward_rational(cl)[0],outward_rational(ch)[1])
++            self.sf=Interval(outward_rational(sl)[0],outward_rational(sh)[1])
++
++    def _context(self,dps):
++        if dps not in self.contexts:
++            ctx=MPIntervalContext();ctx.dps=dps
++            t=iv_rational(ctx,self.theta)
++            self.contexts[dps]=(ctx,ctx.cos(t),ctx.sin(t))
++        return self.contexts[dps]
++
++    @property
++    def enclosing_radius(self):
++        # Rotation preserves Euclidean norm. Ellipse lies in radius max(R,R/k);
++        # any superellipse here lies in [-R,R]^2 and hence in radius 2R.
++        return max(self.R,self.R/self.prm) if self.kind=='ellipse' else 2*self.R
++
++    def bounds(self,kx,ky):
++        x=(Interval(kx)-self.uf)/self.Rf
++        y=(Interval(ky)-self.vf)/self.Rf
++        X=(self.cf*x+self.sf*y).absolute()
++        Y=((-self.sf)*x+self.cf*y).absolute()
++        if self.kind=='ellipse':
++            return X.integer_power(2)+(self.pf*Y).absolute().integer_power(2)
++        return X.positive_power(self.prm)+Y.positive_power(self.prm)
++
++    def _exact_value(self,x,y):
++        if self.disk:
++            return (x*x+y*y)/(self.R*self.R)
++        if self.theta!=0:
++            return None
++        X,Y=abs(x/self.R),abs(y/self.R)
++        if self.kind=='ellipse':
++            return X*X+(self.prm*Y)**2
++        a,b=exact_power(X,self.prm),exact_power(Y,self.prm)
++        return None if a is None or b is None else a+b
++
++    def _iv_value(self,x,y,dps):
++        ctx,c,s=self._context(dps)
++        xx,yy=iv_rational(ctx,x)/iv_rational(ctx,self.R),iv_rational(ctx,y)/iv_rational(ctx,self.R)
++        X,Y=abs(c*xx+s*yy),abs(-s*xx+c*yy)
++        if self.kind=='ellipse':
++            return X**2+(iv_rational(ctx,self.prm)*Y)**2
++        p=iv_rational(ctx,self.prm)
++        return X**p+Y**p
++
++    def contains_point(self,x,y):
++        x,y=rational(x),rational(y)
++        value=self._exact_value(x,y)
++        if value is not None:
++            self.stats['exact_decisions']+=1
++            return value<=1
++        for dps in self.precisions:
++            self.stats['interval_refinements']+=1
++            lo,hi=endpoints(self._iv_value(x,y,dps))
++            if hi<=1:return True
++            if lo>1:return False
++        self.stats['indeterminate']+=1
++        raise GeometryIndeterminate(f'membership unresolved at {self.precisions[-1]} digits: x={x}, y={y}')
++
++    def contains_indices(self,kx,ky):
++        kx,ky=integer_arrays(kx,ky)
++        shape=kx.shape;kx=kx.ravel();ky=ky.ravel()
++        result=np.empty(kx.size,dtype=bool)
++        value=self.bounds(kx,ky)
++        inside=value.hi<=1; outside=value.lo>1
++        result[inside]=True;result[outside]=False
++        self.stats['filtered_decisions']+=int(np.count_nonzero(inside|outside))
++        for i in np.flatnonzero(~(inside|outside)):
++            result[i]=self.contains_point(Fraction(int(kx[i]))-self.u,Fraction(int(ky[i]))-self.v)
++        return result.reshape(shape)
++
++    def _compare_exact_or_iv(self,kx,ky0,ky1):
++        x=Fraction(int(kx))-self.u
++        y0,y1=Fraction(int(ky0))-self.v,Fraction(int(ky1))-self.v
++        if y0==-y1 and (x==0 or self.theta==0):
++            self.stats['exact_symmetry_ties']+=1
++            return 0
++        a,b=self._exact_value(x,y0),self._exact_value(x,y1)
++        if a is not None and b is not None:
++            self.stats['exact_decisions']+=1
++            return (a>b)-(a<b)
++        for dps in self.precisions:
++            self.stats['interval_refinements']+=1
++            lo,hi=endpoints(self._iv_value(x,y0,dps)-self._iv_value(x,y1,dps))
++            if hi<0:return -1
++            if lo>0:return 1
++            if lo==hi==0:return 0
++        self.stats['indeterminate']+=1
++        raise GeometryIndeterminate('discrete convex comparison unresolved; no column is guessed')
++
++    def strictly_decreasing_step(self,kx,ky):
++        # True iff f(ky)>f(ky+1): discrete minimum lies to the right.
++        # Equality chooses the leftmost minimum.
++        kx,ky=integer_arrays(kx,ky)
++        difference=self.bounds(kx,ky)-self.bounds(kx,ky+1)
++        decreasing=difference.lo>0; increasing=difference.hi<0
++        result=decreasing.copy()
++        self.stats['filtered_decisions']+=int(np.count_nonzero(decreasing|increasing))
++        for i in np.flatnonzero(~(decreasing|increasing)):
++            result.ravel()[i]=self._compare_exact_or_iv(int(kx.ravel()[i]),int(ky.ravel()[i]),int(ky.ravel()[i])+1)>0
++        return result
+--- /dev/null
++++ v0.3/candidate/run_geometry_checks.py
+@@ -0,0 +1,89 @@
++"""Compact independent geometry evidence; no C calculation or new campaign.
++
++Run from package root: python candidate/run_geometry_checks.py --out NEW_DIRECTORY
++"""
++import argparse
++import csv
++import hashlib
++import json
++import math
++import platform
++from pathlib import Path
++import time
++import numpy as np
++import scipy
++import mpmath
++from geometry_columns import column_indices,integer_hull_perimeter
++from test_geometry_v03 import reference_disk,vertex_set,ANGLES,SHIFTS,FAILED_RADII
++
++ROOT=Path(__file__).resolve().parent.parent
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--out',required=True,type=Path)
++    args=p.parse_args()
++    args.out.mkdir(parents=True,exist_ok=False)
++    clock=time.monotonic()
++    result={'status':'PASS_LOCAL_GEOMETRY_REGRESSIONS',
++            'scope':'Finite geometry regressions; no full numerical/asymptotic certification.',
++            'C_recalculated':False,'full_campaign_run':False,
++            'environment':{'python':platform.python_version(),'platform':platform.platform(),
++                           'numpy':np.__version__,'scipy':scipy.__version__,'mpmath':mpmath.__version__},
++            'candidate_sha256':{f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted((ROOT/'candidate').glob('*.py'))}}
++    tested=0;failures=[]
++    for R in range(2,251):
++        expected=reference_disk(R)
++        for angle in ANGLES:
++            actual=vertex_set(column_indices('ellipse',1,R,angle))
++            tested+=1
++            if actual!=expected:failures.append({'R':R,'theta':angle,'missing':sorted(expected-actual),'extra':sorted(actual-expected)})
++    result['all_radii_2_250']={'cases':tested,'failures':failures,'passed':tested-len(failures)}
++    details=[]
++    for R in [31,39,41,43,53,1000]:
++        indices,stats=column_indices('ellipse',1,R,.314159,return_stats=True)
++        expected=reference_disk(R)
++        actual=vertex_set(indices)
++        details.append({'R':R,'expected_vertices':len(expected),'actual_vertices':len(actual),
++                        'missing':sorted(expected-actual),'extra':sorted(actual-expected),
++                        'perimeter':integer_hull_perimeter(indices)[0],'predicate_path':stats['path']})
++    result['previous_counterexamples']=details
++    cases=0;wrong=[]
++    for R in FAILED_RADII+[1000]:
++        for u,v in SHIFTS:
++            expected=reference_disk(R,u,v)
++            for angle in ANGLES:
++                cases+=1
++                actual=vertex_set(column_indices('ellipse',1,R,angle,u,v))
++                if actual!=expected:wrong.append({'R':R,'u':str(u),'v':str(v),'theta':angle})
++    result['failed_radii_and_1000_with_shifts']={'cases':cases,'passed':cases-len(wrong),'failures':wrong}
++
++    # Replay existing stored individual hulls, not a new Monte Carlo campaign.
++    with (ROOT/'originals/balayage_translations.csv').open(newline='',encoding='utf-8-sig') as f:
++        rows=list(csv.DictReader(f))
++    selected=[]
++    for r in rows:
++        kind,prm,R,i=r['forme'],float(r['param']),int(float(r['R'])),int(r['echantillon'])
++        if i==0 and (R in [100,1230] or (R==30000 and (kind,prm) in [('ellipse',2.),('super',1.5),('super',10.)])):
++            selected.append(r)
++    replays=[]
++    for r in selected:
++        t=time.monotonic()
++        indices,stats=column_indices(r['forme'],float(r['param']),float(r['R']),float(r['theta']),float(r['u']),float(r['v']),return_stats=True)
++        perim,n=integer_hull_perimeter(indices)
++        replays.append({'forme':r['forme'],'param':float(r['param']),'R':float(r['R']),
++                        'sample':int(r['echantillon']),'perimeter_difference':perim-float(r['P_hull']),
++                        'old_vertex_count':int(r['m_sommets']),'new_vertex_count':n,
++                        'geometry_stats':stats,'seconds':time.monotonic()-t})
++    result['old_csv_replays']=replays
++    result['old_csv_replay_max_abs_perimeter_difference']=max(abs(r['perimeter_difference']) for r in replays)
++    result['old_csv_replay_same_vertex_count']=all(r['old_vertex_count']==r['new_vertex_count'] for r in replays)
++    result['seconds_total']=time.monotonic()-clock
++    if failures or wrong or any(r['missing'] or r['extra'] for r in details):
++        result['status']='FAIL_LOCAL_GEOMETRY_REGRESSIONS'
++    (args.out/'result.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
++    print(json.dumps(result,indent=2))
++    if result['status'].startswith('FAIL'):
++        raise SystemExit(1)
++
++if __name__=='__main__':
++    main()
+--- v0.2/candidate/test_classes_w0.py
++++ v0.3/candidate/test_classes_w0.py
+@@ -8,7 +8,7 @@
+ from pathlib import Path
+ import numpy as np
+ from scipy.spatial import ConvexHull
+-from balayage_translations import columns
++from geometry_columns import column_indices, integer_hull_vertices
+ 
+ K = 4 * math.sqrt(2) / 15
+ 
+@@ -32,8 +32,8 @@
+     for i in range(N):
+         th = rng.uniform(0, math.pi/2)
+         u, v = rng.uniform(0, 1, 2)
+-        pts = columns('ellipse', 1.0, float(R), th, u, v)
+-        w = pts[ConvexHull(pts).vertices]
++        indices = column_indices('ellipse', 1.0, float(R), th, u, v)
++        w = integer_hull_vertices(indices).astype(float) - [u, v]
+         e = np.roll(w, -1, axis=0) - w
+         angles = np.arctan2(w[:,1], w[:,0])
+         arcs = np.mod(np.roll(angles, -1) - angles, 2*math.pi)
+@@ -59,6 +59,7 @@
+     p.add_argument('--seed', type=int, default=42013)
+     p.add_argument('--out', type=Path, required=True)
+     args = p.parse_args()
++    p.error("Tests Monte Carlo par classes suspendus dans v0.3; audit geometrique uniquement")
+     result = {'status':'FINITE_R_MODEL_COMPARISON', 'R':args.R, 'samples':args.samples,
+               'seed':args.seed, 'K':K,
+               'classes':classes(args.R, args.samples, np.random.default_rng(args.seed))}
+--- /dev/null
++++ v0.3/candidate/test_geometry_v03.py
+@@ -0,0 +1,240 @@
++"""Geometry regressions: exact boundary, rational shifts, filtered predicates.
++
++The brute reference uses full-grid enumeration and Jarvis wrapping, independently
++of the production column search and Andrew hull. Large disk references use an
++alternative Fraction residual per column, then Qhull on the integer endpoints.
++"""
++from fractions import Fraction as F
++import math
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++import numpy as np
++from scipy.spatial import ConvexHull
++from mpmath.ctx_mp import MPContext
++from geometry_predicates import BodyPredicate, GeometryIndeterminate, endpoints, Interval
++from geometry_columns import column_indices, disk_column_indices, integer_hull_vertices, integer_hull_perimeter
++
++ROOT=Path(__file__).resolve().parent.parent
++FAILED_RADII=[31,39,41,43,53,55,62,63,78,82,85,86,106,110,124,126,156,164,170,172,207,212,220,239,248]
++ANGLES=[0.,.31,.314159,math.pi/4,math.pi/2,-.314159]
++SHIFTS=[(F(0),F(0)),(F(1,2),F(1,2)),(F(1,4),F(1,2)),(F(3,8),F(7,8)),(F(1,3),F(2,3))]
++
++def vertex_set(points):
++    return {tuple(map(int,p)) for p in integer_hull_vertices(points)}
++
++def jarvis(points):
++    """Reference differs from production's monotone chain."""
++    points=sorted(set(points))
++    if len(points)<3:return set(points)
++    start=points[0];current=start;vertices=[]
++    for _ in range(len(points)+1):
++        vertices.append(current)
++        candidate=next(p for p in points if p!=current)
++        for p in points:
++            if p==current:continue
++            cross=(candidate[0]-current[0])*(p[1]-current[1])-(candidate[1]-current[1])*(p[0]-current[0])
++            distance=lambda a:(a[0]-current[0])**2+(a[1]-current[1])**2
++            if cross<0 or (cross==0 and distance(p)>distance(candidate)):
++                candidate=p
++        current=candidate
++        if current==start:return set(vertices)
++    raise AssertionError('reference hull failed to close')
++
++def reference_disk(R,u=F(0),v=F(0)):
++    R=F(R);u=F(u);v=F(v)
++    pts=[]
++    for kx in range(math.ceil(u-R),math.floor(u+R)+1):
++        residual=R*R-(F(kx)-u)**2
++        if residual<0:continue
++        # Rational sqrt bracket: isqrt(n*d)/d. Its width is <1/d and
++        # candidates are checked against the original squared inequality.
++        h=math.isqrt(residual.numerator*residual.denominator)
++        root_lo=F(h,residual.denominator);root_hi=F(h+1,residual.denominator)
++        bottom=math.floor(v-root_hi)
++        top=math.ceil(v+root_hi)
++        while (F(kx)-u)**2+(F(bottom)-v)**2>R*R:bottom+=1
++        while (F(kx)-u)**2+(F(top)-v)**2>R*R:top-=1
++        if bottom<=top:pts.extend([(kx,bottom),(kx,top)])
++    array=np.asarray(pts,dtype=np.int64).reshape(-1,2)
++    return {tuple(map(int,p)) for p in array[ConvexHull(array).vertices]}
++
++def independent_full_grid(kind,prm,R,theta,u,v):
++    ctx=MPContext();ctx.dps=120
++    def number(q):
++        q=F(q);return ctx.mpf(q.numerator)/q.denominator
++    radius,parameter,t=map(number,(R,prm,theta))
++    c,s=ctx.cos(t),ctx.sin(t)
++    B=math.ceil(max(F(R),F(R)/F(prm))) if kind=='ellipse' else math.ceil(2*F(R))
++    points=[]
++    for kx in range(-B-1,B+2):
++        for ky in range(-B-1,B+2):
++            x,y=F(kx)-F(u),F(ky)-F(v)
++            if (kind=='ellipse' and F(prm)==1) or (kind=='super' and F(prm)==2):
++                inside=x*x+y*y<=F(R)**2
++            elif F(theta)==0 and (kind=='ellipse' or F(prm).denominator==1):
++                X,Y=abs(x/F(R)),abs(y/F(R))
++                value=X*X+(F(prm)*Y)**2 if kind=='ellipse' else X**int(prm)+Y**int(prm)
++                inside=value<=1
++            else:
++                X,Y=abs((c*number(x)+s*number(y))/radius),abs((-s*number(x)+c*number(y))/radius)
++                value=X**2+(parameter*Y)**2 if kind=='ellipse' else X**parameter+Y**parameter
++                # Axis endpoints for noninteger p are exactly known, not rounded.
++                if F(theta)==0 and (abs(x)==F(R) and y==0 or abs(y)==F(R) and x==0):
++                    inside=True
++                else:
++                    if abs(value-1)<ctx.mpf('1e-100'):
++                        raise AssertionError('independent reference ambiguous')
++                    inside=value<1
++            if inside:points.append((kx,ky))
++    return jarvis(points)
++
++class GeometryV03(unittest.TestCase):
++    def test_all_249_radii_multiple_angles(self):
++        for R in range(2,251):
++            expected=reference_disk(R)
++            for th in ANGLES:
++                with self.subTest(R=R,theta=th):
++                    self.assertEqual(vertex_set(column_indices('ellipse',1,R,th)),expected)
++
++    def test_25_failures_rational_shifts_angles(self):
++        for R in FAILED_RADII+[1000]:
++            for u,v in SHIFTS:
++                expected=reference_disk(R,u,v)
++                for th in ANGLES:
++                    with self.subTest(R=R,u=u,v=v,theta=th):
++                        self.assertEqual(vertex_set(column_indices('ellipse',1,R,th,u,v)),expected)
++
++    def test_original_24_extended_cases(self):
++        for R in [5,30,1000]:
++            for u,v in SHIFTS[:4]:
++                for th in [.31,.314159]:
++                    self.assertEqual(vertex_set(column_indices('ellipse',1,R,th,u,v)),reference_disk(R,u,v))
++
++    def test_disk_exhaustive_full_grid_independent(self):
++        for R in [F(7,2),F(5),F(11,3)]:
++            for u,v in SHIFTS:
++                points=[]
++                for x in range(-7,8):
++                    for y in range(-7,8):
++                        if (F(x)-u)**2+(F(y)-v)**2<=R*R:points.append((x,y))
++                self.assertEqual(vertex_set(disk_column_indices(R,u,v)),jarvis(points))
++
++    def test_boundary_neighbours_exact(self):
++        for R,x,y in [(31,31,0),(39,36,15),(41,40,9),(1000,800,600)]:
++            predicate=BodyPredicate('ellipse',1,R,.314159)
++            self.assertTrue(predicate.contains_point(x,y))
++            self.assertTrue(predicate.contains_point(math.nextafter(float(x),0),y))
++            self.assertFalse(predicate.contains_point(math.nextafter(float(x),math.inf),y))
++        # Exact rational translations and fractional radii are retained as exact.
++        p=BodyPredicate('ellipse',1,F(31,3),.314159,F(1,3),F(2,3))
++        self.assertTrue(p.contains_point(F(31,3),0))
++        self.assertFalse(p.contains_point(F(31,3)+F(1,10**80),0))
++
++    def test_radius_ulp_and_subnormal_shift(self):
++        for R in [math.nextafter(31.,0),31.,math.nextafter(31.,math.inf)]:
++            for u,v in [(0,0),(np.nextafter(0.,1.),0)]:
++                self.assertEqual(vertex_set(column_indices('ellipse',1,R,.314159,u,v)),reference_disk(F(R),F(float(u)),F(v)))
++
++    def test_superellipse_p2_is_exact_disk(self):
++        self.assertEqual(vertex_set(column_indices('super',2,31,.314159,F(1,3),F(2,3))),reference_disk(31,F(1,3),F(2,3)))
++
++    def test_all_campaign_shape_families_brute_grid(self):
++        cases=[('super',p) for p in [1.5,2.5,3,4,5,10]]+[('ellipse',k) for k in [1,1.5,2,3,5]]
++        for kind,prm in cases:
++            for th,u,v in [(0,F(0),F(0)),(.314159,F(0),F(0)),(.314159,F(1,3),F(2,3))]:
++                with self.subTest(kind=kind,prm=prm,theta=th):
++                    expected=independent_full_grid(kind,prm,7,th,u,v)
++                    self.assertEqual(vertex_set(column_indices(kind,prm,7,th,u,v)),expected)
++
++    def test_non_half_integer_power_fallback(self):
++        case=('super',F(13,10),5,.314159,F(1,4),F(3,4))
++        indices,stats=column_indices(*case,return_stats=True)
++        self.assertGreater(stats['interval_refinements'],0)
++        self.assertEqual(stats['filtered_decisions'],0)
++        self.assertEqual(vertex_set(indices),independent_full_grid(*case))
++
++    def test_exact_axis_ellipse_with_noninteger_ratio(self):
++        case=('ellipse',F(3,2),15,0,F(0),F(0))
++        indices,stats=column_indices(*case,return_stats=True)
++        self.assertGreater(stats['exact_decisions'],0)
++        self.assertEqual(vertex_set(indices),independent_full_grid(*case))
++
++    def test_symmetric_half_shift_ties(self):
++        _,stats=column_indices('super',F(3,2),9,0,F(1,2),F(1,2),return_stats=True)
++        self.assertGreater(stats['exact_symmetry_ties'],0)
++
++    def test_float_filter_encloses_high_precision_values(self):
++        rng=np.random.default_rng(42030)
++        for kind,prm in [('ellipse',F(3,2)),('super',F(3,2)),('super',F(5,2)),('super',10)]:
++            body=BodyPredicate(kind,prm,F(31,3),F(float(.314159)),F(1,3),F(2,3))
++            x,y=rng.integers(-20,21,(2,80))
++            bound=body.bounds(x,y)
++            for i in range(len(x)):
++                lo,hi=endpoints(body._iv_value(F(int(x[i]))-body.u,F(int(y[i]))-body.v,150))
++                self.assertLessEqual(F(float(bound.lo[i])),lo)
++                self.assertGreaterEqual(F(float(bound.hi[i])),hi)
++
++    def test_indeterminate_does_not_accept_or_reject_silently(self):
++        ctx=MPContext();ctx.dps=100;t=ctx.mpf(1)/10
++        x,y=F(str(ctx.cos(t))),F(str(ctx.sin(t)))
++        body=BodyPredicate('ellipse',2,1,F(1,10),precisions=(15,))
++        with self.assertRaises(GeometryIndeterminate):body.contains_point(x,y)
++        with patch.object(BodyPredicate,'strictly_decreasing_step',side_effect=GeometryIndeterminate('forced')):
++            with self.assertRaises(GeometryIndeterminate):column_indices('ellipse',2,9,.314159)
++
++    def test_resource_budget_refuses_before_partial_return(self):
++        for kind,prm in [('ellipse',1),('ellipse',2),('super',3)]:
++            with self.assertRaises(ValueError):column_indices(kind,prm,100,.314159,max_columns=2)
++        with self.assertRaises(ValueError):column_indices('wrong',1,10,0)
++        with self.assertRaises(ValueError):column_indices('ellipse',1,10,float('nan'))
++        with self.assertRaises(ValueError):column_indices('ellipse',1,10,0,u=1)
++        with self.assertRaises(ValueError):BodyPredicate('ellipse',2,10,0).contains_indices([1.2],[0])
++        with self.assertRaises(ValueError):integer_hull_vertices([[0.1,0.],[1.,0.],[0.,1.]])
++
++    def test_nonempty_and_empty_columns_against_full_grid(self):
++        # Independent exact polynomials at theta=0; compares all column extrema,
++        # so an error hidden strictly inside the final convex hull is detected.
++        for kind,prm in [('ellipse',F(3,2)),('super',3),('super',4)]:
++            R,u,v=F(9,2),F(1,3),F(2,3)
++            expected={}
++            for x in range(-10,11):
++                ys=[]
++                for y in range(-10,11):
++                    X,Y=abs((F(x)-u)/R),abs((F(y)-v)/R)
++                    value=X*X+(prm*Y)**2 if kind=='ellipse' else X**prm+Y**prm
++                    if value<=1:ys.append(y)
++                if ys:expected[x]=(min(ys),max(ys))
++            actual={}
++            for x,y in column_indices(kind,prm,R,0,u,v):
++                x,y=int(x),int(y)
++                low,high=actual.get(x,(y,y));actual[x]=(min(low,y),max(high,y))
++            self.assertEqual(actual,expected)
++
++    def test_integer_hull_does_not_overflow_orientation(self):
++        R=2**40
++        points=np.array([[-R,-R],[R,-R],[R,R],[-R,R],[0,0]],dtype=np.int64)
++        self.assertEqual(vertex_set(points),{(-R,-R),(R,-R),(R,R),(-R,R)})
++        self.assertEqual(integer_hull_perimeter(points),(float(8*R),4))
++        with self.assertRaises(ValueError):integer_hull_perimeter(np.array([[0,0],[1,1]],dtype=np.int64))
++
++    def test_subnormal_arithmetic_not_flushed(self):
++        self.assertGreater(float(np.nextafter(0.,1.)),0)
++        self.assertGreater(float(np.sqrt(np.nextafter(0.,1.))),0)
++        self.assertGreater(float(np.float64(1e-160)*np.float64(1e-160)),0)
++
++    def test_numeric_campaign_and_C_cli_are_suspended(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            for script,args in [('balayage_translations.py',['--campaign','--out',str(Path(tmp)/'campaign')]),
++                                ('formule_integrale.py',['--profile','reference','--out',str(Path(tmp)/'C')]),
++                                ('test_classes_w0.py',['--out',str(Path(tmp)/'classes.json')])]:
++                result=subprocess.run([sys.executable,str(ROOT/'candidate'/script),*args],capture_output=True,text=True)
++                self.assertNotEqual(result.returncode,0)
++                self.assertIn('suspendu',result.stderr)
++                self.assertEqual(list(Path(tmp).iterdir()),[])
++
++if __name__=='__main__':
++    unittest.main(verbosity=2)
+--- v0.2/candidate/test_regressions.py
++++ v0.3/candidate/test_regressions.py
+@@ -129,13 +129,10 @@
+                 got=np.rint(pts[ConvexHull(pts).vertices]+[numerator_u/den,numerator_v/den]).astype(int)
+                 self.assertEqual(set(map(tuple,got)),integer_hull(exact))
+ 
+-    def test_geometry_functions_unchanged(self):
+-        original=ast.parse((ROOT/'originals/balayage_translations.py').read_text(encoding='utf-8-sig'))
+-        candidate=ast.parse((ROOT/'candidate/balayage_translations.py').read_text())
+-        def function(tree,name):
+-            return ast.dump(next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name),include_attributes=False)
+-        for name in ['columns','hull_perim','job']:
+-            self.assertEqual(function(original,name),function(candidate,name))
++    def test_perimeter_requires_integer_indices(self):
++        square = np.array([[0,0],[1,0],[1,1],[0,1]],dtype=np.int64)
++        self.assertEqual(bt.hull_perim(square),(4.,4))
++        with self.assertRaises(ValueError): bt.hull_perim(square.astype(float))
+ 
+     def test_B_finite_cutoff_independent_sum(self):
+         T=8; lam=1/T; contributions=[]

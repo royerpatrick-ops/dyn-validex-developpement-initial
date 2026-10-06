@@ -1,0 +1,28 @@
+{
+  "scope": "Finite geometry and regression audit only; no C calculation and no Monte Carlo campaign.",
+  "criteria": {
+    "G01": "PASS",
+    "G02": "PASS",
+    "G03": "PASS",
+    "G04": "PASS",
+    "G05": "PASS",
+    "G06": "PASS",
+    "G07": "PASS",
+    "G08": "PASS",
+    "G09": "PASS",
+    "G10": "PASS",
+    "G11": "PASS",
+    "G12": "PASS",
+    "G13": "PASS",
+    "G14": "PASS",
+    "G15": "PASS",
+    "G16": "PASS"
+  },
+  "qualification": {
+    "exact_rational_disk": "PASS",
+    "other_shapes_finite_tests": "PASS",
+    "other_shapes_global_certification": "INCONCLUSIVE",
+    "C": "INCONCLUSIVE_NOT_EVALUATED",
+    "global_asymptotic_theory": "INCONCLUSIVE_NOT_EVALUATED"
+  }
+}

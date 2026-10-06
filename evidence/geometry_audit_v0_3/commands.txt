@@ -1,0 +1,5 @@
+SET PYTHONDONTWRITEBYTECODE=1
+"C:\Users\dynagenese\Desktop\pi utile et efficace\DYN-CORRECTIVE_INTEGER-HULL_v0_2\DYN-CORRECTIVE_INTEGER-HULL_v0_2\.venv_audit\Scripts\python.exe" -m unittest discover -s candidate -p "test_*.py" -v
+"C:\Users\dynagenese\Desktop\pi utile et efficace\DYN-CORRECTIVE_INTEGER-HULL_v0_2\DYN-CORRECTIVE_INTEGER-HULL_v0_2\.venv_audit\Scripts\python.exe" candidate/run_geometry_checks.py --out audit_codex_v03/geometry
+"C:\Users\dynagenese\Desktop\pi utile et efficace\DYN-CORRECTIVE_INTEGER-HULL_v0_2\DYN-CORRECTIVE_INTEGER-HULL_v0_2\.venv_audit\Scripts\python.exe" audit_codex_v03/independent_checks.py
+Generate audit_manifest_sha256.json, then validate all JSON/status/source hashes (read-only)

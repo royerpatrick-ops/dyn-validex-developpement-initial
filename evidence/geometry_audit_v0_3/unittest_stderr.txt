@@ -1,0 +1,38 @@
+test_25_failures_rational_shifts_angles (test_geometry_v03.GeometryV03.test_25_failures_rational_shifts_angles) ... ok
+test_all_249_radii_multiple_angles (test_geometry_v03.GeometryV03.test_all_249_radii_multiple_angles) ... ok
+test_all_campaign_shape_families_brute_grid (test_geometry_v03.GeometryV03.test_all_campaign_shape_families_brute_grid) ... ok
+test_boundary_neighbours_exact (test_geometry_v03.GeometryV03.test_boundary_neighbours_exact) ... ok
+test_disk_exhaustive_full_grid_independent (test_geometry_v03.GeometryV03.test_disk_exhaustive_full_grid_independent) ... ok
+test_exact_axis_ellipse_with_noninteger_ratio (test_geometry_v03.GeometryV03.test_exact_axis_ellipse_with_noninteger_ratio) ... ok
+test_float_filter_encloses_high_precision_values (test_geometry_v03.GeometryV03.test_float_filter_encloses_high_precision_values) ... ok
+test_indeterminate_does_not_accept_or_reject_silently (test_geometry_v03.GeometryV03.test_indeterminate_does_not_accept_or_reject_silently) ... ok
+test_integer_hull_does_not_overflow_orientation (test_geometry_v03.GeometryV03.test_integer_hull_does_not_overflow_orientation) ... ok
+test_non_half_integer_power_fallback (test_geometry_v03.GeometryV03.test_non_half_integer_power_fallback) ... ok
+test_nonempty_and_empty_columns_against_full_grid (test_geometry_v03.GeometryV03.test_nonempty_and_empty_columns_against_full_grid) ... ok
+test_numeric_campaign_and_C_cli_are_suspended (test_geometry_v03.GeometryV03.test_numeric_campaign_and_C_cli_are_suspended) ... ok
+test_original_24_extended_cases (test_geometry_v03.GeometryV03.test_original_24_extended_cases) ... ok
+test_radius_ulp_and_subnormal_shift (test_geometry_v03.GeometryV03.test_radius_ulp_and_subnormal_shift) ... ok
+test_resource_budget_refuses_before_partial_return (test_geometry_v03.GeometryV03.test_resource_budget_refuses_before_partial_return) ... ok
+test_subnormal_arithmetic_not_flushed (test_geometry_v03.GeometryV03.test_subnormal_arithmetic_not_flushed) ... ok
+test_superellipse_p2_is_exact_disk (test_geometry_v03.GeometryV03.test_superellipse_p2_is_exact_disk) ... ok
+test_symmetric_half_shift_ties (test_geometry_v03.GeometryV03.test_symmetric_half_shift_ties) ... ok
+test_B_finite_cutoff_independent_sum (test_regressions.CorrectiveRegression.test_B_finite_cutoff_independent_sum) ... ok
+test_correct_class_coefficient (test_regressions.CorrectiveRegression.test_correct_class_coefficient) ... ok
+test_disk_invariants (test_regressions.CorrectiveRegression.test_disk_invariants) ... ok
+test_divergence_is_rejected_before_quadrature (test_regressions.CorrectiveRegression.test_divergence_is_rejected_before_quadrature) ... ok
+test_exact_rational_disk_vertices (test_regressions.CorrectiveRegression.test_exact_rational_disk_vertices) ... ok
+test_finite_counterexample_I43 (test_regressions.CorrectiveRegression.test_finite_counterexample_I43) ... ok
+test_finite_tail_with_nonconstant_a3G (test_regressions.CorrectiveRegression.test_finite_tail_with_nonconstant_a3G) ... ok
+test_invalid_invariant_parameters (test_regressions.CorrectiveRegression.test_invalid_invariant_parameters) ... ok
+test_invalid_quadrature_is_fatal (test_regressions.CorrectiveRegression.test_invalid_quadrature_is_fatal) ... ok
+test_original_sources_intact (test_regressions.CorrectiveRegression.test_original_sources_intact) ... ok
+test_perimeter_requires_integer_indices (test_regressions.CorrectiveRegression.test_perimeter_requires_integer_indices) ... ok
+test_sampler_cutoffs_and_inputs (test_regressions.CorrectiveRegression.test_sampler_cutoffs_and_inputs) ... ok
+test_sampler_independent_scalar (test_regressions.CorrectiveRegression.test_sampler_independent_scalar) ... ok
+test_supplied_invariants_preserved (test_regressions.CorrectiveRegression.test_supplied_invariants_preserved) ... ok
+test_warning_is_fatal (test_regressions.CorrectiveRegression.test_warning_is_fatal) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 7.109s
+
+OK

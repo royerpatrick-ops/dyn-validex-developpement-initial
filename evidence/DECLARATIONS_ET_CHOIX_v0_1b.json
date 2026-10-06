@@ -1,0 +1,19 @@
+{
+  "confirmed_by_user_in_session": {
+    "public_author_name": "Patrick Royer",
+    "status": "chercheur indépendant, sans affiliation institutionnelle",
+    "deposit_access": "public",
+    "license_mode": "DEL personnalisée conservant les restrictions militaires et de manipulation"
+  },
+  "ai_assistance_requested": true,
+  "ai_roles": [
+    "development",
+    "documented bounded checks",
+    "final technical and documentary integration"
+  ],
+  "human_direction_and_publication_responsibility": "Patrick Royer",
+  "no_inferred_affiliation_or_orcid": true,
+  "no_complete_historical_model_version_log": true,
+  "doi_current_public_record_not_independently_confirmed": true,
+  "license_adaptation_is_not_legal_certification": true
+}

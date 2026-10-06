@@ -1,0 +1,116 @@
+[
+  {
+    "label": "manuscript",
+    "file": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1b.pdf",
+    "sha256": "24511800a7cd5b7ba4248152bdb63202c3f998834463ce2e245bd4b04a5f3509",
+    "pages": 9,
+    "author": "Patrick Royer",
+    "renderer": "pdftoppm",
+    "dpi": 110,
+    "render_stderr": "",
+    "page_text_checks": [
+      {
+        "page": 1,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1925
+      },
+      {
+        "page": 2,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2407
+      },
+      {
+        "page": 3,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1613
+      },
+      {
+        "page": 4,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1542
+      },
+      {
+        "page": 5,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2422
+      },
+      {
+        "page": 6,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1887
+      },
+      {
+        "page": 7,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1611
+      },
+      {
+        "page": 8,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1952
+      },
+      {
+        "page": 9,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 3196
+      }
+    ]
+  },
+  {
+    "label": "licence",
+    "file": "licenses/DYN-LICENCE_DEL_v1_1.pdf",
+    "sha256": "a81a7b31574d8846ce4e762d378f52cbbee6413b4ef161ecf0bfe55cb05191fa",
+    "pages": 6,
+    "author": "Patrick Royer",
+    "renderer": "pdftoppm",
+    "dpi": 110,
+    "render_stderr": "",
+    "page_text_checks": [
+      {
+        "page": 1,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2848
+      },
+      {
+        "page": 2,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 3221
+      },
+      {
+        "page": 3,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2263
+      },
+      {
+        "page": 4,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2687
+      },
+      {
+        "page": 5,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 2938
+      },
+      {
+        "page": 6,
+        "replacement_chars": 0,
+        "black_or_empty_square_chars": 0,
+        "text_length": 1375
+      }
+    ]
+  }
+]

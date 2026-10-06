@@ -1,0 +1,12 @@
+{
+  "python": "3.12.14",
+  "packages": {
+    "reportlab": "4.4.9",
+    "matplotlib": "3.10.8",
+    "Pillow": "12.3.0",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0"
+  },
+  "scientific_campaign_environment_reconstructed": false
+}

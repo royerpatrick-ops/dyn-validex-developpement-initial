@@ -1,0 +1,68 @@
+{
+  "files": {
+    "commands.txt": {
+      "bytes": 726,
+      "sha256": "119443a038d044ff1cdd247e79ddfdc7a2e26352f1342ffa36e0f110c5707e98"
+    },
+    "criteria_G01_G16.json": {
+      "bytes": 689,
+      "sha256": "f6c8c29ee5aee66d7a452d30b3468d2956a350fff6baeea79d079eacd48b9c39"
+    },
+    "environment.json": {
+      "bytes": 591,
+      "sha256": "89c1b6c2d628f6ad820152a72ea37b27384481e530a3d72ad8bfaf16ef2319ff"
+    },
+    "geometry\\result.json": {
+      "bytes": 16330,
+      "sha256": "fb71fd9bc5c2208729f1075349dbd870acbf8646a025597ec6ce2f6c9efa38fb"
+    },
+    "geometry_status.json": {
+      "bytes": 49,
+      "sha256": "5b574ecc889e65342c2f629b06752f1f94d6b779f64f8ff6873e87952a271084"
+    },
+    "geometry_stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "geometry_stdout.txt": {
+      "bytes": 16332,
+      "sha256": "98d8a8dc2f780e2028d4eb59533f116614e2f2d23139dc089cb20afa656faae6"
+    },
+    "independent_checks.py": {
+      "bytes": 31296,
+      "sha256": "ced45a7fd57b2f641024a1ac720b729fec9d9d88afeb59cf77be79ba526baa07"
+    },
+    "independent_results.json": {
+      "bytes": 7809,
+      "sha256": "1d3fdcb2bcd771eb23828ac9087d4f25d7b48f94c089bc0e970033fc881fe83c"
+    },
+    "independent_status.json": {
+      "bytes": 49,
+      "sha256": "2da9ccc14835abac9ed5a2a451b203c9fea38c97fb451afb8d8efaa20c0261ff"
+    },
+    "independent_stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "independent_stdout.txt": {
+      "bytes": 7809,
+      "sha256": "1d3fdcb2bcd771eb23828ac9087d4f25d7b48f94c089bc0e970033fc881fe83c"
+    },
+    "RAPPORT_AUDIT_CODEX_v0_3.md": {
+      "bytes": 11035,
+      "sha256": "bf38e11b98300e2c46d04abed2f38585b7935adc22e684a9c49543e65e1e1b3e"
+    },
+    "unittest_status.json": {
+      "bytes": 50,
+      "sha256": "da6bf082bd4162b26a56bd3b017f4065445059edf270f7ee7a31738d23fe55fd"
+    },
+    "unittest_stderr.txt": {
+      "bytes": 4026,
+      "sha256": "a766aaa99364c3fd5d956b4198ff11d31f6130a6b27e49082612aae9f9fc9426"
+    },
+    "unittest_stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

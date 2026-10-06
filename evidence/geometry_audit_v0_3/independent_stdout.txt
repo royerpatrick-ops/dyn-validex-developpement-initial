@@ -1,0 +1,254 @@
+{
+  "status": "PASS",
+  "scope": "Audit geometrique et regressif fini; aucun calcul de C ni campagne Monte Carlo.",
+  "environment": {
+    "executable": "C:\\Users\\dynagenese\\Desktop\\pi utile et efficace\\DYN-CORRECTIVE_INTEGER-HULL_v0_2\\DYN-CORRECTIVE_INTEGER-HULL_v0_2\\.venv_audit\\Scripts\\python.exe",
+    "python": "3.14.5",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "mpmath": "1.4.1"
+  },
+  "checks": [
+    {
+      "id": "G01a",
+      "title": "Integrite du paquet, des originaux et de la candidate",
+      "status": "PASS",
+      "seconds": 0.04275860000052489,
+      "details": {
+        "package_manifest_entries": 122,
+        "original_files": 89,
+        "candidate_files": 12,
+        "candidate_sha256": {
+          "balayage_translations.py": "91880497244e360c8de87b2c075a325e5fa670d65086805e735d8c565cccc606",
+          "check_datasets.py": "88058e77cb419582a99ae0b9bf95f449179b323c9f2f9f83b8b442446fcd4add",
+          "coefficient_B.py": "6ed54d87fed02111856139352801a7e8a9baf84612b51f5e86a31696dfb902fd",
+          "formule_integrale.py": "5ba7ed39b7ffc892369f89a00be70a3cc37e78594313131cc230e6bb41b926b0",
+          "geometry_columns.py": "6f142ffdea296c508dba4f002c4304fb3783bc40674032289f64107f70a7cee5",
+          "geometry_predicates.py": "e09d737e3d14ce4562b7eeb5c991cc3cdbdc86dc6cf76939a478b47ebe72e6ff",
+          "integral_model.py": "9278e80de5034317329c25c6e83c17a38f9c799bc7dbd5d46bdb09af1ddab311",
+          "invariant_checks.py": "74b15d6ec940ab361e8f378d122dc825f9620c3179d81c204e5e9d737fc34279",
+          "run_geometry_checks.py": "a5e1b65d7a28ae860b1043e6a4ca88ad70589e2e65caaefa57a61211360ba228",
+          "test_classes_w0.py": "40dcb9b5ccd3d4becc2ed9c4560a0a30775b1fb2891886ec7d547cabf8c4dd38",
+          "test_geometry_v03.py": "d6aa247f873d9cbc73605d8d42713f6bd584300681daf5022c1d91245ecedd31",
+          "test_regressions.py": "da39e94e77866a5bd3d29daeee42a1f705928dc68b4f5408b95741e1b9b84b78"
+        }
+      }
+    },
+    {
+      "id": "G01b",
+      "title": "Identite des deux archives historiques",
+      "status": "PASS",
+      "seconds": 0.5211875999993936,
+      "details": {
+        "v0_2_files_compared": 134,
+        "review_v0_1_files_compared": 18
+      }
+    },
+    {
+      "id": "G01c",
+      "title": "Analyse syntaxique des douze modules candidats",
+      "status": "PASS",
+      "seconds": 0.011283399999229005,
+      "details": {
+        "parsed": [
+          "balayage_translations.py",
+          "check_datasets.py",
+          "coefficient_B.py",
+          "formule_integrale.py",
+          "geometry_columns.py",
+          "geometry_predicates.py",
+          "integral_model.py",
+          "invariant_checks.py",
+          "run_geometry_checks.py",
+          "test_classes_w0.py",
+          "test_geometry_v03.py",
+          "test_regressions.py"
+        ],
+        "count": 12
+      }
+    },
+    {
+      "id": "G02",
+      "title": "Conversions rationnelles et entrees invalides",
+      "status": "PASS",
+      "seconds": 0.00013630000103148632,
+      "details": {
+        "invalid_inputs_rejected": 10,
+        "float_semantics": "exact binary rational"
+      }
+    },
+    {
+      "id": "G03-G04-G08",
+      "title": "Disques rationnels exhaustifs et frontiere",
+      "status": "PASS",
+      "seconds": 0.010885700001381338,
+      "details": {
+        "cases": 30,
+        "full_grid_points_classified": 1236,
+        "denominators": [
+          3,
+          5,
+          7,
+          9,
+          11,
+          97,
+          101
+        ]
+      }
+    },
+    {
+      "id": "G03-G04",
+      "title": "Flottants binaires, ULP et subnormal",
+      "status": "PASS",
+      "seconds": 0.008081600000878097,
+      "details": {
+        "float_cases": 18,
+        "exact_boundary_pairs": 3,
+        "subnormal_shift": 5e-324
+      }
+    },
+    {
+      "id": "G09-G10",
+      "title": "Onze familles, toutes les extremites de colonnes",
+      "status": "PASS",
+      "seconds": 0.6480695999998716,
+      "details": {
+        "families": 11,
+        "configurations_per_family": 3,
+        "cases": 33,
+        "inside_lattice_points": 1628
+      }
+    },
+    {
+      "id": "G04-G09-G12",
+      "title": "Flottants generiques proches de la frontiere",
+      "status": "PASS",
+      "seconds": 0.026612300000124378,
+      "details": {
+        "classifications": 18,
+        "interval_refinements": 18
+      }
+    },
+    {
+      "id": "G11a",
+      "title": "Encadrements float64 contre 260 chiffres",
+      "status": "PASS",
+      "seconds": 0.28644619999977294,
+      "details": {
+        "values": 1728,
+        "finite_intervals": 1728,
+        "reference_digits": 260
+      }
+    },
+    {
+      "id": "G11b",
+      "title": "Intervalles mpmath contre 260 chiffres",
+      "status": "PASS",
+      "seconds": 0.12325799999962328,
+      "details": {
+        "values": 400,
+        "interval_digits": 100,
+        "reference_digits": 260
+      }
+    },
+    {
+      "id": "G12",
+      "title": "Arret naturel sur cas indetermine",
+      "status": "PASS",
+      "seconds": 0.0021708000003854977,
+      "details": {
+        "natural_indeterminate_cases": 1,
+        "precision_digits": 15
+      }
+    },
+    {
+      "id": "G13-G14",
+      "title": "Symetries, ressources et enveloppe entiere",
+      "status": "PASS",
+      "seconds": 0.005236099999819999,
+      "details": {
+        "central_symmetry_points": 28,
+        "column_budget_rejected": true,
+        "coordinate_budget_rejected": true,
+        "large_integer_hull_vertices": 4,
+        "nonempty_float_indices_rejected": true,
+        "degenerate_perimeter_rejected": true
+      }
+    },
+    {
+      "id": "G05-G06-G07-G15",
+      "title": "Resultats prescrits et replays historiques",
+      "status": "PASS",
+      "seconds": 0.011621900001046015,
+      "details": {
+        "unit_tests": 33,
+        "all_radii": "1494/1494",
+        "shifted_cases": "780/780",
+        "historical_replays": 25,
+        "max_abs_perimeter_difference": 1.8189894035458565e-12
+      }
+    },
+    {
+      "id": "G16",
+      "title": "Sorties neuves, imports et CLI suspendues",
+      "status": "PASS",
+      "seconds": 5.268924699999843,
+      "details": {
+        "existing_output_refused": true,
+        "existing_output_unchanged": true,
+        "suspended_clis": [
+          {
+            "script": "balayage_translations.py",
+            "returncode": 2
+          },
+          {
+            "script": "formule_integrale.py",
+            "returncode": 2
+          },
+          {
+            "script": "test_classes_w0.py",
+            "returncode": 2
+          }
+        ],
+        "imports_without_output": true
+      }
+    },
+    {
+      "id": "G15",
+      "title": "Noyaux non geometriques preserves",
+      "status": "PASS",
+      "seconds": 0.46311710000009043,
+      "details": {
+        "byte_identical_modules": [
+          "check_datasets.py",
+          "coefficient_B.py",
+          "integral_model.py",
+          "invariant_checks.py"
+        ],
+        "unchanged_numerical_functions": [
+          "deterministic_tail",
+          "estimate",
+          "log_nodes"
+        ],
+        "C_calculated": false,
+        "campaign_run": false
+      }
+    }
+  ],
+  "observations": [
+    {
+      "severity": "LOW",
+      "subject": "budget boolean",
+      "observed": "accepted"
+    },
+    {
+      "severity": "LOW",
+      "subject": "empty float hull input",
+      "observed": "accepted"
+    }
+  ],
+  "seconds_total": 7.451932599999054,
+  "C_calculated": false,
+  "full_campaign_run": false
+}

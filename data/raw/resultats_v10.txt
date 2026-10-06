@@ -1,0 +1,44 @@
+C_eff v10 — N_orient=16, 6 formes
+============================================================
+
+cercle_p2:
+  R=   300  P_cont=1884.9556  P_hull=1884.3823  DeltaP=0.57326  C_eff=0.6108
+  R=  1000  P_cont=6283.1853  P_hull=6282.8915  DeltaP=0.29380  C_eff=0.4676
+  R=  3000  P_cont=18849.5559  P_hull=18849.2916  DeltaP=0.26433  C_eff=0.6067
+  R= 10000  P_cont=62831.8531  P_hull=62831.6731  DeltaP=0.17995  C_eff=0.6170
+  R= 30000  P_cont=188495.5592  P_hull=188495.4328  DeltaP=0.12644  C_eff=0.6253
+
+super_p1.5:
+  R=   300  P_cont=1781.8084  P_hull=1781.1613  DeltaP=0.64716  C_eff=0.5553
+  R=  1000  P_cont=5939.3614  P_hull=5938.9038  DeltaP=0.45767  C_eff=0.5866
+  R=  3000  P_cont=17818.0843  P_hull=17817.7420  DeltaP=0.34230  C_eff=0.6328
+  R= 10000  P_cont=59393.6143  P_hull=59393.3777  DeltaP=0.23668  C_eff=0.6536
+  R= 30000  P_cont=178180.8430  P_hull=178180.6824  DeltaP=0.16061  C_eff=0.6396
+
+super_p2.5:
+  R=   300  P_cont=1964.0114  P_hull=1963.4625  DeltaP=0.54891  C_eff=0.5737
+  R=  1000  P_cont=6546.7047  P_hull=6546.2916  DeltaP=0.41308  C_eff=0.6450
+  R=  3000  P_cont=19640.1142  P_hull=19639.8248  DeltaP=0.28939  C_eff=0.6517
+  R= 10000  P_cont=65467.0472  P_hull=65466.8492  DeltaP=0.19804  C_eff=0.6662
+  R= 30000  P_cont=196401.1417  P_hull=196401.0043  DeltaP=0.13738  C_eff=0.6665
+
+super_p5:
+  R=   300  P_cont=2158.3329  P_hull=2157.6898  DeltaP=0.64309  C_eff=0.5554
+  R=  1000  P_cont=7194.4431  P_hull=7193.9728  DeltaP=0.47031  C_eff=0.6067
+  R=  3000  P_cont=21583.3292  P_hull=21582.9825  DeltaP=0.34665  C_eff=0.6450
+  R= 10000  P_cont=71944.4307  P_hull=71944.1966  DeltaP=0.23409  C_eff=0.6506
+  R= 30000  P_cont=215833.2920  P_hull=215833.1265  DeltaP=0.16548  C_eff=0.6633
+
+super_p10:
+  R=   300  P_cont=2273.2225  P_hull=2272.3435  DeltaP=0.87898  C_eff=0.6070
+  R=  1000  P_cont=7577.4083  P_hull=7576.8319  DeltaP=0.57646  C_eff=0.5947
+  R=  3000  P_cont=22732.2249  P_hull=22731.8081  DeltaP=0.41690  C_eff=0.6202
+  R= 10000  P_cont=75774.0832  P_hull=75773.7867  DeltaP=0.29642  C_eff=0.6588
+  R= 30000  P_cont=227322.2495  P_hull=227322.0409  DeltaP=0.20856  C_eff=0.6685
+
+ellipse_a3:
+  R=   300  P_cont=1336.4893  P_hull=1335.6666  DeltaP=0.82268  C_eff=0.5943
+  R=  1000  P_cont=4454.9644  P_hull=4454.3997  DeltaP=0.56475  C_eff=0.6094
+  R=  3000  P_cont=13364.8932  P_hull=13364.4953  DeltaP=0.39791  C_eff=0.6193
+  R= 10000  P_cont=44549.6441  P_hull=44549.3721  DeltaP=0.27198  C_eff=0.6323
+  R= 30000  P_cont=133648.9322  P_hull=133648.7311  DeltaP=0.20114  C_eff=0.6744

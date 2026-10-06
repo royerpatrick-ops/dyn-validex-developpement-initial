@@ -1,0 +1,20 @@
+{
+  "executable": "C:\\Users\\dynagenese\\Desktop\\pi utile et efficace\\DYN-CORRECTIVE_INTEGER-HULL_v0_2\\DYN-CORRECTIVE_INTEGER-HULL_v0_2\\.venv_audit\\Scripts\\python.exe",
+  "python": "3.14.5",
+  "implementation": "CPython",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "mpmath": "1.4.1",
+  "tested_upstream_environment": {
+    "python": "3.12.14",
+    "platform": "Linux",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "mpmath": "1.4.1"
+  },
+  "differences": [
+    "Python 3.14.5 vs 3.12.14",
+    "Windows vs Linux"
+  ]
+}

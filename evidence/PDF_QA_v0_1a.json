@@ -1,0 +1,15 @@
+{
+  "file": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1a.pdf",
+  "pages": 8,
+  "display_equations_composed": 18,
+  "rendered_pages_inspected": 8,
+  "replacement_character_count_in_extracted_text": 0,
+  "empty_box_character_count_in_extracted_text": 0,
+  "visual_result": "PASS",
+  "notes": [
+    "All pages were rendered at 150 dpi and inspected as a contact sheet.",
+    "Display equations were composed with Matplotlib mathtext and embedded as high-resolution transparent images.",
+    "Poppler emitted environment font-alias warnings unrelated to fonts referenced by the PDF; no missing glyph was visible and extracted text contained no replacement or empty-box character."
+  ],
+  "sha256": "69bb27110a4bc7a1bed111640c8a3b425e7fc0c506b577e70e2c5602854c93c7"
+}

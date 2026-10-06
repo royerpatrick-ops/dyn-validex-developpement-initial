@@ -1,0 +1,89 @@
+{
+  "base": "DYN-CANDIDATE_ZENODO_DEFICIT-PERIMETRE_v0_1/data/raw",
+  "corrective": "DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a/data/raw",
+  "algorithm": "SHA-256",
+  "base_file_count": 19,
+  "corrective_file_count": 19,
+  "missing": [],
+  "added": [],
+  "changed": [],
+  "identical": true,
+  "files": [
+    {
+      "path": "C_eff_par_R.csv",
+      "sha256": "37bb25a288f7117fea3268063fc3e6323f0c89bee1af36d01000aa1d171aece9"
+    },
+    {
+      "path": "balayage_corrige.csv",
+      "sha256": "fa7c22b3a60b65d5a9449ba585dafaa0b31475069bb1235b03c0bae5d600465e"
+    },
+    {
+      "path": "balayage_grands_R.csv",
+      "sha256": "7eeb97f8d2b81faab405bfeb3b29593a7e47f73488cbc4222cddd8602442204d"
+    },
+    {
+      "path": "balayage_translations.csv",
+      "sha256": "f97587da1cd03e9fa07304e5311e5b72a526570e9cb76edc04cb4c7dea9f40cf"
+    },
+    {
+      "path": "correction_v9.txt",
+      "sha256": "473be94e95b59b1d0a3cdadadb9ff7ac817493a35266befda715fbffca889914"
+    },
+    {
+      "path": "decomposition_aretes.npy",
+      "sha256": "db6ae8376e4417af87e0e8cdf9166de5b668f6a7a86c672581f6948bee1cbcf2"
+    },
+    {
+      "path": "extension_R100k_v2_corrige.json",
+      "sha256": "400b870b7dbe5a53d4f9c4a7cc4d8b9d9556203bcf9ed8b8ff8a24cfceb43bda"
+    },
+    {
+      "path": "formule_integrale.npy",
+      "sha256": "43b949cc475cdcc79304d654d8e23023ad2302c575eb0aa9eaa1346ae9c76454"
+    },
+    {
+      "path": "invariants.csv",
+      "sha256": "65ef5e650d8611abeb417fd7988882d88a6b4e68cc925bb628a391df638c1925"
+    },
+    {
+      "path": "modele_local.npy",
+      "sha256": "55f932827c09eecd475f743bb734a341d843e1f2d2c23a69429dc1319ee31c30"
+    },
+    {
+      "path": "modele_local_resultats claude 2.txt",
+      "sha256": "65c73a708e32da393f368c0ccc3503d499b89a8c005a4fd7da62211a158b9ee1"
+    },
+    {
+      "path": "queue_aretes.npy",
+      "sha256": "bf5befc7c1600d25a3ef89498dd307d9d069a0f7e9df65c1da4a5a46d7d0c076"
+    },
+    {
+      "path": "resultats_v10.txt",
+      "sha256": "b18537bf3b4208fb2038527d5d3c216e2c0bbefcdb47472df4a2233a886626ae"
+    },
+    {
+      "path": "run_lourd_v10.txt",
+      "sha256": "5b8fff263ee2b4d02651201fd2aaf48b215ed8a8ff4f2e539ec782c36d2b033a"
+    },
+    {
+      "path": "superellipse_p1.75_singuliere.json",
+      "sha256": "8af622b9355489221e54fd3f891f3278afdcdc3e2ba726e2325f2406603ac7f8"
+    },
+    {
+      "path": "test_A_ellipse_corrige.json",
+      "sha256": "5056f0f8d9251420d8d075d92011901d2a0cd2a2946b4a561a7ac95130dee5ef"
+    },
+    {
+      "path": "test_B_ellipse_corrige.json",
+      "sha256": "c539d07f8745648fa4efa5c830382c888035eab220367171005810c594e53751"
+    },
+    {
+      "path": "test_superellipse_p1.5_2026-10-03.md",
+      "sha256": "9c7cd882973dc1b5c7e1cf214440b9a13ebceb50d2406acd91ed6f751c2526c5"
+    },
+    {
+      "path": "transition_p2_v2.txt",
+      "sha256": "2b756d4f41802c2c55bc36f30c6d88594e277707e789b5043949a315378c6246"
+    }
+  ]
+}

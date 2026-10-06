@@ -1,0 +1,90 @@
+{
+  "package": "DYN-FINALISATION_ZENODO_DEFICIT-PERIMETRE_v0_1b",
+  "version": "0.1b",
+  "date": "2026-10-04",
+  "status": "LOCAL_FINALISATION_FOR_PUBLIC_ACCESS",
+  "base_archive": {
+    "name": "DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a.zip",
+    "sha256": "06ca194b881a12fe229c84ea37803c372eac21b39e33798e96adc3a60d865ec7",
+    "preserved": true
+  },
+  "prior_v0_1_archive_sha256": "d95c54ff82366f910ecfdd2df949c27f42b8a4201df70e7cfeaea529f2451407",
+  "scope": {
+    "new_hull_generator": false,
+    "new_scientific_reanalysis": false,
+    "p2_campaign": "NOT_RUN",
+    "external_publication": false,
+    "raw_data_changed": false
+  },
+  "author": {
+    "name": "Patrick Royer",
+    "status": "independent researcher",
+    "institutional_affiliation": null,
+    "name_confirmed_by_user": true,
+    "orcid": null
+  },
+  "ai_contributions_notice": "metadata/NOTICE_IA_ET_OUTILS.md",
+  "primary_outputs": {
+    "source": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1b.md",
+    "source_sha256": "fdbd55199f68f420b174c2f9d76fd6edd49a1e68fb5104aa71824538c11a3c2a",
+    "pdf": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1b.pdf",
+    "pdf_sha256": "24511800a7cd5b7ba4248152bdb63202c3f998834463ce2e245bd4b04a5f3509",
+    "pdf_pages": 9,
+    "licence_pdf": "licenses/DYN-LICENCE_DEL_v1_1.pdf",
+    "licence_pdf_sha256": "a81a7b31574d8846ce4e762d378f52cbbee6413b4ef161ecf0bfe55cb05191fa",
+    "licence_pdf_pages": 6
+  },
+  "license": {
+    "title": "Licence Dynagénèse Éthique (DEL), version 1.1",
+    "type": "custom use-restricted license",
+    "reference_language": "French",
+    "reference_file": "licenses/DEL_v1_1_FR.md",
+    "english_reading_translation": "licenses/DEL_v1_1_EN.md",
+    "scope_file": "licenses/LICENSE_SCOPE.md",
+    "original_model_sha256": "733e1ad1e948125ef498a36461f6c548a8b4104e5dfa604805704d33a7b8515b",
+    "only_to_extent_of_rights_held": true,
+    "not_osi_open_source": true,
+    "not_legal_certification": true
+  },
+  "scientific_reproduction": {
+    "source": "evidence/reproduction_v0_1a/command_receipts.json",
+    "historical_central_exit_code": 0,
+    "historical_p175_exit_code": 0,
+    "not_rerun_in_this_documentary_finalisation": true
+  },
+  "data_preservation": {
+    "identical": true,
+    "raw_file_count": 19,
+    "scientific_file_count": 61,
+    "receipt": "evidence/PRESERVATION_v0_1b.json"
+  },
+  "documentary_corrections": {
+    "F01_F06": "preserved",
+    "A1": "square-lattice quarter-turn symmetry",
+    "A2": "C20 locator corrected to supplied extension note, section 6, page 7"
+  },
+  "doi": {
+    "communicated": "10.5281/zenodo.23110956",
+    "current_record_status": "not independently confirmed by this preparation",
+    "owner_association_required": true,
+    "status_note": "evidence/DOI_STATUS.md"
+  },
+  "historical_records": [
+    "evidence/history/",
+    "evidence/source_documents/",
+    "evidence/PDF_QA_v0_1a.json",
+    "evidence/FICHE_CORRECTIVE_F01_F06.md",
+    "licenses/history/"
+  ],
+  "pdf_qa": "evidence/PDF_QA_v0_1b.json",
+  "source_inventory": "evidence/SOURCE_INVENTORY.csv",
+  "inventory_excludes": [
+    "evidence/SOURCE_INVENTORY.csv",
+    "PACKAGE_MANIFEST.json",
+    "SHA256SUMS.txt"
+  ],
+  "sha256_manifest_excludes_itself": true,
+  "metadata_json_is_preparation_not_validated_api_payload": true,
+  "inventory_entries": 161,
+  "package_file_entries": 164
+}

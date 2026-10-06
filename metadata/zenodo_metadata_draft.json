@@ -1,0 +1,46 @@
+{
+  "title": "Déficit de périmètre des enveloppes entières randomisées : conjecture à deux termes, résultats numériques et applications à la mesure des courbes convexes",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "description_file": "DESCRIPTION.md",
+  "creators": [
+    {
+      "name": "Royer, Patrick"
+    }
+  ],
+  "keywords": [
+    "integer convex hull",
+    "randomized lattice",
+    "perimeter deficit",
+    "curvature integrals",
+    "digital geometry",
+    "numerical conjecture"
+  ],
+  "publication_date": "2026-10-04",
+  "version": "0.1b",
+  "language": "fra",
+  "license": {
+    "type": "custom",
+    "title": "Licence Dynagénèse Éthique (DEL), version 1.1",
+    "local_id": "LicenseRef-Dynagenese-DEL-1.1",
+    "file": "licenses/DYN-LICENCE_DEL_v1_1.pdf",
+    "url": null,
+    "reference_text": "licenses/DEL_v1_1_FR.md"
+  },
+  "doi_communicated": "10.5281/zenodo.23110956",
+  "_status": "LOCAL_PREPARATION_FOR_PUBLIC_DEPOSIT",
+  "_not_for_automatic_upload": true,
+  "_creator_name_and_license_mode_confirmed_in_session": true,
+  "creator_status": "chercheur indépendant, sans affiliation institutionnelle",
+  "access_right": "open",
+  "ai_assistance_notice": "NOTICE_IA_ET_OUTILS.md",
+  "doi_verification_status": "Owner must associate the communicated DOI with this deposit; no current public-record status independently confirmed.",
+  "notes": [
+    "Public access requested by the author.",
+    "No institutional affiliation or ORCID is inferred.",
+    "AI assistance in development, bounded checks and final technical integration is disclosed.",
+    "No generator or P2 campaign executed; two-term law remains conjectural.",
+    "No external upload or publication performed by this preparation.",
+    "Publication date to match the actual deposit date; this JSON is a preparation document, not a validated API payload."
+  ]
+}

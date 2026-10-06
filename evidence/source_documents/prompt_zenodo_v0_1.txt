@@ -1,0 +1,220 @@
+DYN-PROMPT_CODEX_DOSSIER-ZENODO v0.1
+Date : 4 octobre 2026
+Projet : Conjecture valeur effective de π / déficit de périmètre
+Objet : préparer une candidate de dépôt Zenodo à partir des éléments existants.
+DOI communiqué par l’utilisateur : 10.5281/zenodo.23110956
+Statut de ce DOI : non vérifié dans la session de préparation.
+
+MISSION
+
+Constituer le dossier des éléments à ajouter au dépôt Zenodo, corriger le
+manuscrit et rendre chaque affirmation traçable. Livrer une candidate locale
+complète et un bilan précis des manques. Cette mission est une préparation
+documentaire et une réanalyse des sorties existantes ; elle ne lance pas une
+nouvelle campagne P2 et ne publie pas sur Zenodo.
+
+DOCUMENTS DE RÉFÉRENCE
+
+1. Déficit de périmètre de l’enveloppe entière d’un convexe lisse : une loi en
+   ∫κ^(4/3), PDF de 17 pages daté du 2 octobre 2026.
+2. Fiche_validation_extension_constantes_et_cas_singuliers_v1_1(1).pdf,
+   PDF de 11 pages du 4 octobre 2026.
+3. DYN-CADRAGE_ZENODO_DEFICIT-PERIMETRE_v0_1.pdf, joint à cette consigne.
+
+Identifier les fichiers effectivement disponibles dans l’environnement de
+travail. Ne supposer aucun chemin Windows à partir du seul nom d’un PDF.
+Conserver les versions sources ; créer une candidate distincte.
+
+A. INVENTAIRE ET PROVENANCE
+
+- Lister les fichiers disponibles, leurs rôles, tailles et SHA-256.
+- Retrouver, si présents dans les éléments accessibles, les scripts et sorties
+  cités par le manuscrit : balayage_translations.py, analyse_translations.py,
+  balayage_grands_R.py, analyse_grands_R.py, decomposition_aretes.py,
+  queue_aretes.py, modele_local.py, formule_integrale.py, queue_cible.py,
+  assemblage_C.py, constante_B.py, constante_B_grand_a.py,
+  test_classes_w0.py, delta_R.py, identite_pick.py et verif_rapport.py.
+- Retrouver leurs CSV, NPY/NPZ, journaux et configurations s’ils existent.
+  Documenter aussi les JSON p = 1,5 et p = 1,75 et les NPZ de localisation
+  mentionnés par la fiche v1.1 ; ne pas prétendre que ces pièces sont jointes
+  parce que le PDF les cite.
+- Associer à chaque tableau, figure et valeur du manuscrit la pièce source.
+  Marquer PRESENT_VERIFIED, PRESENT_UNVERIFIED ou MISSING, avec justification.
+- Ne pas reconstituer des bruts par tirage à partir de moyennes arrondies et
+  ne pas créer de journaux fictifs.
+
+B. RÉVISION SCIENTIFIQUE
+
+Titre candidat :
+« Déficit de périmètre des enveloppes entières randomisées : conjecture à
+deux termes, résultats numériques et applications à la mesure des courbes
+convexes ».
+
+Définir K, R, la maille, la mesure de randomisation, les unités et les
+invariants. Retenir L = ρ(Z²+t), t uniforme sur [0,1)², ρ uniforme sur SO(2),
+indépendants, ou décrire explicitement toute autre mesure utilisée.
+
+H_R = conv(RK ∩ L)
+ΔP_R = R P(K) - P(H_R)
+I_a(K) = ∫ sur ∂K de κ^a ds
+I_a(cK) = c^(1-a) I_a(K)
+
+Présenter l’ordre moyen Θ(R^(-1/3)) comme résultat connu dans la classe
+de Ngoc-Reitzner, sous une hypothèse suffisante de boule intérieure roulante.
+Référence : B. H. Ngoc et M. Reitzner, Expected mean width of the randomized
+integer convex hull, Mathematika 67 (2021), 422-433,
+DOI 10.1112/mtk.12080 ; arXiv:2003.06864.
+En dimension 2, W = P/π. Vérifier les références primaires qui seront citées.
+
+Présenter séparément comme CONJECTURE :
+E[ΔP_R] = C∞ I_(4/3)(K) R^(-1/3)
+          - B I_(3/2)(K) R^(-1/2) + o(R^(-1/2)).
+
+Classe candidate prudente : bord au moins C², courbure bornée supérieurement
+et inférieurement par des constantes strictement positives. Mentionner que
+le contrôle du reste peut exiger des hypothèses supplémentaires.
+
+- Corriger le passage de l’introduction qui affirme qu’aucun ordre de
+  grandeur du déficit de périmètre n’est démontré.
+- Corriger « La loi est désormais établie dans ses deux termes » et les
+  autres formulations qui confondent concordance numérique et preuve.
+- Ne pas qualifier le transfert au modèle de Haar de rigoureux sur la base
+  de la seule description locale ou d’un théorème classique. Isoler les
+  hypothèses de convergence, d’intégrabilité uniforme et de contrôle des
+  queues ou excursions qu’un tel transfert nécessiterait.
+- Distinguer la valeur calculée dans un modèle du coefficient du problème
+  réel. C∞ ≈ 0,7192 ± 0,0003 et B ≈ 0,2894 restent des valeurs candidates.
+- Distinguer la combinatoire de l’enveloppe, les tests d’appartenance,
+  les racines quadratiques et les quadratures/perimètres flottants.
+  Une enveloppe obtenue par du calcul flottant n’est pas certifiée exacte
+  du seul fait qu’elle coïncide avec une autre routine flottante.
+- Limiter l’affirmation de nouveauté aux résultats dont l’antériorité a
+  effectivement été recherchée ; ne pas revendiquer le nouvel exposant
+  moyen R^(-1/3), déjà connu dans la classe précisée.
+
+C. RÉANALYSE DES SORTIES EXISTANTES
+
+Quand les bruts sont disponibles, recalculer les statistiques de synthèse
+et les ajustements nécessaires sans relancer les générateurs de grands R.
+Décrire les transformations et préserver les données sources.
+
+- Vérifier les normalisations, les invariants et les unités.
+- Définir le sens de chaque « ± » : écart-type des tirages, erreur de la
+  moyenne, intervalle, erreur de quadrature ou budget systématique.
+- Identifier n, k, ν = n-k, la covariance et le nombre réel de paramètres
+  libres. Distinguer χ²/n et χ² réduit ; tracer les exclusions de points.
+- Auditer la sélection du modèle : données utilisées pour proposer le
+  terme secondaire, calculer ou choisir les coefficients, puis tester la
+  prédiction. Un test sans ajustement final n’est pas indépendant si les
+  données ont déjà servi à la sélection du modèle.
+- Recalculer le χ² = 106,8 et l’agrégat de 92 mesures si les pièces le
+  permettent ; sinon conserver « résultat rapporté, non recalculé ».
+- Documenter la variance des tirages séparément de la précision de la
+  moyenne, et les corrélations entre rayons ou formes si elles existent.
+- Documenter la précision arithmétique, les tolérances, la stabilité des
+  soustractions P_cont - P_hull, les quadratures et les contrôles de queue.
+- Pour les contrôles annoncés sur deux machines, produire les traces
+  présentes. La reproduction du même code n’établit pas l’absence de
+  défaut algorithmique partagé.
+
+D. SECTION APPLICATIONS
+
+Présenter trois usages dans un domaine explicite, avec un statut pour chaque
+usage : testé / proposé / conditionnel.
+
+1. Biais de mesure d’un périmètre sur une maille h = 1/R :
+   P(K) - E[P(H_h)] = C∞ I_(4/3)(K) h^(4/3)
+                     - B I_(3/2)(K) h^(3/2) + o(h^(3/2)),
+   H_h = conv(K ∩ hL).
+   Définir un correctif candidat ; ne déclarer un gain que s’il a été mesuré
+   contre le périmètre brut et un comparateur pertinent, sur des données
+   distinctes. Préciser si les invariants sont connus analytiquement ou
+   estimés à partir de la numérisation et propager leurs incertitudes.
+
+2. Choix de résolution pour un biais moyen absolu ε :
+   h ≈ [ε/(C∞ I_(4/3)(K))]^(3/4), comme règle conditionnelle du terme dominant.
+   Ne pas en faire une garantie pour chaque tirage ni une borne certifiée.
+
+3. Disque unité et π :
+   π_eff = P(H_R)/(2R),
+   π - E[π_eff] = π C∞ R^(-4/3) - π B R^(-3/2) + o(R^(-3/2)),
+   conditionnellement à la conjecture à deux termes.
+   Le seul ordre moyen Θ(R^(-4/3)) découle déjà du résultat publié.
+   Distinguer le benchmark d’un algorithme compétitif de calcul de π.
+   Un correctif annoncé pour estimer π doit être calculable sans sa valeur
+   exacte ; cette valeur peut servir à l’évaluation.
+
+Si aucune comparaison applicative n’existe, écrire « application proposée »
+et préparer un protocole court distinct. N’inventer aucun gain mesuré.
+
+E. EXTENSIONS À METTRE EN ANNEXE EXPLORATOIRE
+
+- Retenir les seuils analytiques des superellipses :
+  I_(4/3) fini si et seulement si p > 5/4 ;
+  I_(3/2) fini si et seulement si p > 4/3, pour 1 < p < 2.
+- Séparer les logarithmes établis des intégrales tronquées et les termes
+  logarithmiques seulement candidats du déficit. À p = 7/5, le seul
+  croisement d’exposants n’impose pas de logarithme.
+- Définir s, S = Rs et β avant toute localisation ; ne pas attribuer un
+  observable absent aux données par supposition.
+- Retirer les éléments justificatifs de l’ancien seuil d’anisotropie.
+  Ce retrait ne démontre pas l’absence de dépendance à l’anisotropie.
+- Pour la lemniscate, l’enveloppe convexe cible son propre périmètre,
+  pas la longueur des boucles ni 2ϖ. Ne pas annoncer une estimation
+  validée de ϖ sans un estimateur adapté et sa convergence.
+- Présenter l’extension aux périodes comme dépendante du triplet
+  représentation / mesure / discrétisation. Ne pas attribuer une loi
+  d’erreur au seul statut rationnel, algébrique ou transcendant.
+- Vérifier les références et les statuts arithmétiques à la date du dépôt
+  si ces éléments sont conservés dans une annexe.
+
+F. LIVRABLES
+
+Constituer une arborescence claire comprenant :
+
+  manuscript/  PDF révisé et source éditable
+  evidence/    registre des affirmations, corrections, réanalyse, limites
+  code/        scripts réellement disponibles et dépendances
+  data/        bruts réellement disponibles et dictionnaire des colonnes
+  figures/     figures et procédure de reproduction
+  metadata/    description, références, métadonnées candidates
+  README      rôle des fichiers, commandes, pièces manquantes
+  SHA256SUMS  empreintes des fichiers de la livraison, hors auto-empreinte
+
+Les noms de fichiers sont proposés ; adapter au format source existant.
+Ne pas créer des fichiers vides pour simuler la présence de pièces absentes.
+Fournir une archive ZIP de la candidate et une liste lisible des pièces.
+Les critères méthodologiques DYN-VALIDEX restent dans le rapport ; éviter
+de remplir le parcours du lecteur du manuscrit de détails administratifs.
+
+Métadonnées candidates : type prépublication/note de recherche selon les
+choix disponibles ; titre ci-dessus ; résumé prudent ; mots-clés : integer
+convex hull, randomized lattice, perimeter deficit, curvature integrals,
+digital geometry, numerical conjecture. Vérifier l’auteur et ses identifiants
+au lieu d’inventer une affiliation ou un ORCID. Proposer des licences adaptées
+au texte, aux données et au code en indiquant les droits à confirmer.
+
+Vérifier le statut du DOI communiqué :
+- s’il est réservé pour le brouillon, préparer les pièces pour ce brouillon ;
+- s’il désigne déjà un dépôt publié, distinguer DOI de version et DOI de
+  concept avant de préparer une nouvelle version liée ;
+- s’il reste inaccessible, marquer le statut comme inconnu.
+Ne pas déduire « inexistant » d’un échec d’accès.
+
+G. BILAN FINAL
+
+Livrer le dossier réellement constitué et un verdict motivé :
+1. Candidate numérique auditable : principaux bruts et scripts présents,
+   statistiques retracées, limites et corrections conservées ; ou
+2. Candidate documentaire provisoire : pièces manquantes explicites,
+   chiffres attribués comme résultats rapportés, sans revendication de
+   reproductibilité complète ou de validation applicative acquise.
+
+Ne pas exiger une preuve générale de la conjecture comme condition de dépôt.
+Ne pas déclarer la candidate entièrement reproductible si les pièces
+nécessaires manquent. La finalisation reste possible avec une portée réduite
+et une description fidèle des éléments disponibles.
+
+État à conserver : P2 = NOT_RUN tant qu’une exécution distincte n’a pas été
+attestée. Cette mission ne vaut pas attestation de P2 et ne modifie pas sa
+candidate, sa grille ou son audit.

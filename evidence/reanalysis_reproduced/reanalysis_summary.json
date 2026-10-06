@@ -1,0 +1,321 @@
+{
+  "sources": [
+    "C:\\Users\\dynagenese\\Desktop\\pi utile et efficace\\DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a\\data\\raw\\balayage_translations.csv",
+    "C:\\Users\\dynagenese\\Desktop\\pi utile et efficace\\DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a\\data\\raw\\balayage_grands_R.csv"
+  ],
+  "selection": "four shapes present in grand-R campaign; grouped points with R >= 1230; duplicate R=30000 pooled",
+  "uncertainty": "plus/minus is one standard error of the sample mean: sample SD with ddof=1 divided by sqrt(n)",
+  "counts_by_shape": [
+    {
+      "forme": "ellipse",
+      "param": 1.0,
+      "points": 23,
+      "R_min": 1230.0,
+      "R_max": 1000000.0,
+      "n_min": 64,
+      "n_max": 192
+    },
+    {
+      "forme": "ellipse",
+      "param": 2.0,
+      "points": 23,
+      "R_min": 1230.0,
+      "R_max": 1000000.0,
+      "n_min": 64,
+      "n_max": 192
+    },
+    {
+      "forme": "ellipse",
+      "param": 5.0,
+      "points": 23,
+      "R_min": 1230.0,
+      "R_max": 1000000.0,
+      "n_min": 64,
+      "n_max": 192
+    },
+    {
+      "forme": "super",
+      "param": 3.0,
+      "points": 23,
+      "R_min": 1230.0,
+      "R_max": 1000000.0,
+      "n_min": 64,
+      "n_max": 192
+    }
+  ],
+  "fixed_external_constants": {
+    "C_inf": 0.7192,
+    "B": 0.2894,
+    "chi2": 106.84359443323852,
+    "n": 92,
+    "chi2_per_n": 1.1613434177525925,
+    "dof_if_external_constants": 92,
+    "max_abs_z": 2.6935321641343477,
+    "covariance_assumption": "diagonal; cross-radius covariance not estimable from supplied outputs"
+  },
+  "two_parameter_weighted_fit_diagonal": {
+    "beta": [
+      0.7204065784901132,
+      0.2960534882001475
+    ],
+    "standard_errors_nominal": [
+      0.0005487617992099821,
+      0.003278351881134888
+    ],
+    "covariance_nominal": [
+      [
+        3.0113951227217666e-07,
+        1.6953468503931025e-06
+      ],
+      [
+        1.6953468503931025e-06,
+        1.0747591056540658e-05
+      ]
+    ],
+    "chi2": 101.99306346990298,
+    "n": 92,
+    "dof": 90,
+    "chi2_per_dof": 1.1332562607766998,
+    "parameter_order": [
+      "C_inf",
+      "B"
+    ]
+  },
+  "one_parameter_weighted_fit_diagonal": {
+    "beta": [
+      0.28926072617589244
+    ],
+    "standard_errors_nominal": [
+      0.0010968931178676527
+    ],
+    "covariance_nominal": [
+      [
+        1.2031745120254201e-06
+      ]
+    ],
+    "chi2": 106.82747275023542,
+    "n": 92,
+    "dof": 91,
+    "chi2_per_dof": 1.173928271980609,
+    "parameter_order": [
+      "B_with_C_inf_fixed"
+    ]
+  },
+  "class_stratification": {
+    "regular_positive_curvature_core": {
+      "definition": "disk and ellipses 2:1 and 5:1; strictly positive curvature",
+      "n": 69,
+      "fixed_chi2": 87.35710798725265,
+      "fixed_chi2_per_n": 1.2660450432935166,
+      "fixed_max_abs_z": 2.6935321641343477,
+      "two_parameter_weighted_fit_diagonal": {
+        "beta": [
+          0.7204881565361285,
+          0.29593562569143617
+        ],
+        "standard_errors_nominal": [
+          0.0006116142461362197,
+          0.003612827662505598
+        ],
+        "covariance_nominal": [
+          [
+            3.740719860767764e-07,
+            2.0783878666148325e-06
+          ],
+          [
+            2.0783878666148325e-06,
+            1.3052523718965662e-05
+          ]
+        ],
+        "chi2": 82.66449106584692,
+        "n": 69,
+        "dof": 67,
+        "chi2_per_dof": 1.2337983741171181,
+        "parameter_order": [
+          "C_inf",
+          "B"
+        ]
+      }
+    },
+    "exploratory_superellipse_p3": {
+      "definition": "superellipse p=3; curvature vanishes at the four axial points",
+      "n": 23,
+      "fixed_chi2": 19.48648644598586,
+      "fixed_chi2_per_n": 0.84723854112982,
+      "fixed_max_abs_z": 2.69044233923509,
+      "two_parameter_weighted_fit_diagonal": {
+        "beta": [
+          0.72028171094545,
+          0.2975923253107929
+        ],
+        "standard_errors_nominal": [
+          0.0012604326951625598,
+          0.00785807259559636
+        ],
+        "covariance_nominal": [
+          [
+            1.5886905790347543e-06,
+            9.41080083051908e-06
+          ],
+          [
+            9.410800830519081e-06,
+            6.17493049176625e-05
+          ]
+        ],
+        "chi2": 18.219412651125857,
+        "n": 23,
+        "dof": 21,
+        "chi2_per_dof": 0.8675910786250408,
+        "parameter_order": [
+          "C_inf",
+          "B"
+        ]
+      }
+    },
+    "by_shape": {
+      "ellipse:1": {
+        "n": 23,
+        "fixed_chi2": 40.19672543767251,
+        "fixed_chi2_per_n": 1.7476837146814135,
+        "fixed_max_abs_z": 2.6935321641343477,
+        "two_parameter_weighted_fit_diagonal": {
+          "beta": [
+            0.7218596385506543,
+            0.30423238579619777
+          ],
+          "standard_errors_nominal": [
+            0.0007996330125898304,
+            0.0051553040235903305
+          ],
+          "covariance_nominal": [
+            [
+              6.394129548234879e-07,
+              3.9094975829118e-06
+            ],
+            [
+              3.909497582911801e-06,
+              2.6577159575646652e-05
+            ]
+          ],
+          "chi2": 28.37002754466892,
+          "n": 23,
+          "dof": 21,
+          "chi2_per_dof": 1.350953692603282,
+          "parameter_order": [
+            "C_inf",
+            "B"
+          ]
+        }
+      },
+      "ellipse:2": {
+        "n": 23,
+        "fixed_chi2": 27.040536795707183,
+        "fixed_chi2_per_n": 1.1756755128568341,
+        "fixed_max_abs_z": 2.1525365402596752,
+        "two_parameter_weighted_fit_diagonal": {
+          "beta": [
+            0.7191206765519913,
+            0.2916171933363285
+          ],
+          "standard_errors_nominal": [
+            0.0014493646820296837,
+            0.008321158885045313
+          ],
+          "covariance_nominal": [
+            [
+              2.100657981515006e-06,
+              1.1482745915824739e-05
+            ],
+            [
+              1.1482745915824739e-05,
+              6.924168519016856e-05
+            ]
+          ],
+          "chi2": 25.952164955581814,
+          "n": 23,
+          "dof": 21,
+          "chi2_per_dof": 1.2358173788372293,
+          "parameter_order": [
+            "C_inf",
+            "B"
+          ]
+        }
+      },
+      "ellipse:5": {
+        "n": 23,
+        "fixed_chi2": 20.119845753872976,
+        "fixed_chi2_per_n": 0.8747759023423033,
+        "fixed_max_abs_z": 2.033861758942797,
+        "two_parameter_weighted_fit_diagonal": {
+          "beta": [
+            0.7166599993395171,
+            0.2768082191575422
+          ],
+          "standard_errors_nominal": [
+            0.0020559387348919357,
+            0.008902055632500128
+          ],
+          "covariance_nominal": [
+            [
+              4.2268840816290536e-06,
+              1.7432879132381813e-05
+            ],
+            [
+              1.743287913238181e-05,
+              7.924659448412724e-05
+            ]
+          ],
+          "chi2": 17.984157818087724,
+          "n": 23,
+          "dof": 21,
+          "chi2_per_dof": 0.8563884675279868,
+          "parameter_order": [
+            "C_inf",
+            "B"
+          ]
+        }
+      },
+      "super:3": {
+        "n": 23,
+        "fixed_chi2": 19.48648644598586,
+        "fixed_chi2_per_n": 0.84723854112982,
+        "fixed_max_abs_z": 2.69044233923509,
+        "two_parameter_weighted_fit_diagonal": {
+          "beta": [
+            0.72028171094545,
+            0.2975923253107929
+          ],
+          "standard_errors_nominal": [
+            0.0012604326951625598,
+            0.00785807259559636
+          ],
+          "covariance_nominal": [
+            [
+              1.5886905790347543e-06,
+              9.41080083051908e-06
+            ],
+            [
+              9.410800830519081e-06,
+              6.17493049176625e-05
+            ]
+          ],
+          "chi2": 18.219412651125857,
+          "n": 23,
+          "dof": 21,
+          "chi2_per_dof": 0.8675910786250408,
+          "parameter_order": [
+            "C_inf",
+            "B"
+          ]
+        }
+      }
+    }
+  },
+  "notes": [
+    "No large generator was rerun.",
+    "Nominal covariance matrices are inverse weighted normal matrices and do not include model discrepancy.",
+    "The 92 grouped means are not 92 raw draws; n is 64, 128, or 192 at pooled R=30000.",
+    "Model and cutoff were selected in the same research workflow; chi-square is descriptive, not a preregistered confirmatory p-value.",
+    "The superellipse p=3 is retained in the 92-point aggregate only as an exploratory extension outside the positive-curvature core."
+  ]
+}

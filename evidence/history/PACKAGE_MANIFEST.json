@@ -1,0 +1,53 @@
+{
+  "package": "DYN-CORRECTIVE_ZENODO_DEFICIT-PERIMETRE_v0_1a",
+  "version": "0.1a",
+  "date": "2026-10-04",
+  "status": "DOCUMENTARY_CORRECTIVE_NOT_PUBLISHED",
+  "base_archive": {
+    "name": "DYN-CANDIDATE_ZENODO_DEFICIT-PERIMETRE_v0_1.zip",
+    "sha256": "d95c54ff82366f910ecfdd2df949c27f42b8a4201df70e7cfeaea529f2451407",
+    "preserved": true
+  },
+  "counter_verification": {
+    "name": "DYN-CONTRE-VERIFICATION_ZENODO_DEFICIT-PERIMETRE_v0_1.zip",
+    "sha256": "cce5f0530e79f0b84be9ece7d69a5e560c0e178692eaf6e966c0a12430181e62",
+    "corrections_applied": [
+      "F01",
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "F06"
+    ]
+  },
+  "scope": {
+    "new_hull_generator": false,
+    "p2_campaign": "NOT_RUN",
+    "external_publication": false,
+    "raw_data_changed": false
+  },
+  "primary_outputs": {
+    "source": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1a.md",
+    "source_sha256": "20ee3108477dcce5b73fc2c5ab117e2f5c79751252c8238e3c17eeb0816a2f05",
+    "pdf": "manuscript/DYN-MANUSCRIT_DEFICIT-PERIMETRE_v0_1a.pdf",
+    "pdf_sha256": "69bb27110a4bc7a1bed111640c8a3b425e7fc0c506b577e70e2c5602854c93c7",
+    "pdf_pages": 8
+  },
+  "reproduction": {
+    "central_exit_code": 0,
+    "p175_exit_code": 0,
+    "working_directory": "package root"
+  },
+  "data_preservation": {
+    "identical": true,
+    "file_count": 19,
+    "receipt": "evidence/DATA_PRESERVATION_CHECK.json"
+  },
+  "metadata": {
+    "creator_inferred": false,
+    "affiliation_inferred": false,
+    "publication_blocked_until_human_metadata_and_rights_are_confirmed": true
+  },
+  "inventory_entries": 130,
+  "sha256_manifest_excludes_itself": true
+}

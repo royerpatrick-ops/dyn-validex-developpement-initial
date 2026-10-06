@@ -1,0 +1,53 @@
+{
+  "README_command": {
+    "argv": [
+      "python",
+      "code/reanalysis/reanalyse_zenodo_candidate.py",
+      "--candidate-root",
+      ".",
+      "--output",
+      "/workspace/scratch/2fbeb09f4fbb/tmp/zenodo_review/recomputed/readme"
+    ],
+    "exit_code": 2,
+    "stdout_file": "README_command_stdout.txt",
+    "stderr_file": "README_command_stderr.txt"
+  },
+  "manuscript_command": {
+    "argv": [
+      "python",
+      "code/reanalysis/reanalyse_zenodo_main.py",
+      "--root",
+      ".",
+      "--output",
+      "/workspace/scratch/2fbeb09f4fbb/tmp/zenodo_review/recomputed/manuscript"
+    ],
+    "exit_code": 2,
+    "stdout_file": "manuscript_command_stdout.txt",
+    "stderr_file": "manuscript_command_stderr.txt"
+  },
+  "corrected_command": {
+    "argv": [
+      "python",
+      "code/reanalysis/reanalyse_zenodo_candidate.py",
+      "--root",
+      ".",
+      "--output",
+      "/workspace/scratch/2fbeb09f4fbb/tmp/zenodo_review/recomputed/corrected"
+    ],
+    "exit_code": 0,
+    "stdout_file": "corrected_command_stdout.txt",
+    "stderr_file": "corrected_command_stderr.txt"
+  },
+  "p175_command": {
+    "argv": [
+      "python",
+      "code/reanalysis/recompute_superellipse_stats.py",
+      "1.75",
+      "--data-dir",
+      "/workspace/scratch/2fbeb09f4fbb/tmp/zenodo_review/input/DYN-CANDIDATE_ZENODO_DEFICIT-PERIMETRE_v0_1/data/raw"
+    ],
+    "exit_code": 0,
+    "stdout_file": "p175_command_stdout.txt",
+    "stderr_file": "p175_command_stderr.txt"
+  }
+}
